@@ -1,47 +1,43 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
+  <div class="app">
+    <header>
+      <img src="./components/img/logoEni.jpg" alt="Logo" class="logo">
+      <h1 class="title">ENI-Encheres</h1>
+      <nav>
+        <router-link to="/connexion">Connexion</router-link>
+        <router-link to="/inscription">Inscription</router-link>
+      </nav>
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+    </header>
+    <div class="content">
+      <router-view></router-view>
+      <div class="filters">
+        <p>Filtres :</p>
+      </div>
+      <div class="search-container">
+        <input type="text" placeholder="Recherche...">
+      </div>
+      <div class="select-container">
+        <p> Catégories</p>
+        <select>
+          <option value="">Choisissez une catégorie</option>
+          <option value="informatiques">Informatiques</option>
+          <option value="ameublement">Ameublement</option>
+          <option value="vêtements">Vêtements</option>
+          <option value="sports-loisirs">Sports & Loisirs</option>
+        </select>
+      </div>
     </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+    <footer>
+      <!-- Votre contenu de pied de page ici -->
+    </footer>
+  </div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-}
+<script>
+export default {
+  name: 'App',
+};
+</script>
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>
+<style lang="css" src="./assets/main.css"></style>
