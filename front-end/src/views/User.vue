@@ -40,9 +40,9 @@ async function creerUser(){
     user.value.pseudo = ''
     user.value.prenom = ''
     user.value.nom = ''
-    user.value.codePostal = ''
+    user.value.code_postal = ''
     user.value.ville = ''
-    user.value.motDePasse = ''
+    user.value.mot_de_passe = ''
     user.value.rue = ''
     user.value.email = ''
     user.value.telephone = ''
@@ -93,11 +93,11 @@ console.log("user");
 
       <FormTextElement label="Rue" :object="user" field="rue"/>
 
-      <FormTextElement label="Code postal" :object="user" field="codePostal"/>
+      <FormTextElement label="Code postal" :object="user" field="code_postal"/>
 
       <FormTextElement label="Ville" :object="user" field="ville"/>
 
-      <FormTextElement label="Mot de passe" :object="user" field="motDePasse"/>
+      <FormTextElement label="Mot de passe" :object="user" field="mot_de_passe"/>
 
       <!--
           on ne veut pas valider le formulaire quand on clique sur le bouton , donc il faut rajouter type="button"
