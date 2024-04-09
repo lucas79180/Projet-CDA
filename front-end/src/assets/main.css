@@ -56,14 +56,18 @@ nav a:hover {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-input[type="text"] {
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"] {
   width: 100%;
-  padding: 15px; /* Augmenter la taille de la police */
+  padding: 12px; /* Augmenter la taille de la police */
   border: none;
-  border-radius: 10px; /* Augmenter le rayon des coins */
-  font-size: 16px; /* Taille de la police */
+  border-radius: 6px; /* Augmenter le rayon des coins */
+  font-size: 12px; /* Taille de la police */
   color: #5a5a5a; /* Gris foncé */
 }
+
 
 .select-container {
   margin-top: 20px;

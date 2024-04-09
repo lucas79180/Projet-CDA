@@ -59,7 +59,6 @@ async function creerUser(){
 console.log("user");
 
 </script>
-
 <template>
   <main>
 
@@ -72,7 +71,7 @@ console.log("user");
         Je vais créer une balise form juste pour des raisons sémantiques (accessibilité, référencement par les moteurs de recherche)
         Il ne va pas être validé car je vais lancer les requeêtes POST avec javascript
      -->
-    <form>
+    <form class="form">
 
       <!-- FormTextElement est un composant définie dans components/FormTextElement.vue :
           il va prendre en paramètres des propriétés (props) :
@@ -81,29 +80,30 @@ console.log("user");
           ici la reference a été déclarée en havascript (plus haut) avec const membre = ref({....}
           - field (valeur = texte) : correspond au champs de l'objet que je vais vouloir éditer à travers ce composant
       -->
-      <FormTextElement label="Pseudo" :object="user" field="pseudo"/>
+      <FormTextElement label="Pseudo" type="text" :object="user" field="pseudo"/>
 
-      <FormTextElement label="Nom" :object="user" field="nom"/>
+      <FormTextElement label="Nom" type="text" :object="user" field="nom"/>
 
-      <FormTextElement label="Prenom" :object="user" field="prenom"/>
+      <FormTextElement label="Prénom" type="text" :object="user" field="prenom" />
 
-      <FormTextElement label="Email" :object="user" field="email"/>
+      <FormTextElement label="Email" type="email" :object="user" field="email"/>
 
-      <FormTextElement label="Telephone" :object="user" field="telephone"/>
+      <FormTextElement label="Mot de passe" type="password" :object="user" field="mot_de_passe"/>
 
-      <FormTextElement label="Rue" :object="user" field="rue"/>
+      <FormTextElement label="Téléphone" type="tel" :object="user" field="telephone"/>
 
-      <FormTextElement label="Code postal" :object="user" field="code_postal"/>
+      <FormTextElement label="Rue" type="text" :object="user" field="rue"/>
 
-      <FormTextElement label="Ville" :object="user" field="ville"/>
+      <FormTextElement label="Code postal" type="text" :object="user" field="code_postal"/>
 
-      <FormTextElement label="Mot de passe" :object="user" field="mot_de_passe"/>
+      <FormTextElement label="Ville" type="text" :object="user" field="ville" />
+
 
       <!--
           on ne veut pas valider le formulaire quand on clique sur le bouton , donc il faut rajouter type="button"
           par contre, je veux appeler lorsqu'on clique dessus une méthode Javascript : creermembre ( @click="creermembre")
       -->
-      <button type="button" @click="creerUser">Créer utilisateur</button>
+      <button type="submit" @click="creerUser">Créer utilisateur</button>
     </form>
 
   </main>
