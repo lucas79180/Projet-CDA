@@ -6,9 +6,11 @@
       <router-link  to="./" > <h1 class="title">ENI-Encheres</h1> </router-link>
       </nav>
       <nav>
+        <router-link to="/nouvelle-vente">Nouvelle Vente</router-link>
+        <router-link to="/monprofil"> Mon profil</router-link>
         <router-link to="/connexion">Connexion</router-link>
         <router-link to="/inscription">Inscription</router-link>
-        <router-link to="/nouvelle-vente">Nouvelle Vente</router-link>
+
       </nav>
     </header>
     <div class="content">
