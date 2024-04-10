@@ -2,11 +2,14 @@ package org.enchere.backend.api;
 
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.enchere.backend.api.doc.SwaggerDoc;
 import org.enchere.backend.model.User;
 import org.enchere.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Tag(name = "API UTILISATEURS", description = SwaggerDoc.DESC_GENERIQUE + "utilisateurs")
 @RestController// obligatoire afin que le controller soit dans le contexte Spring

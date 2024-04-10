@@ -14,8 +14,6 @@ public class UserController {
 
     @PostMapping()
     public User ajouterUtilisateur(@RequestBody User utilisateur) {
-        System.out.println("--- ajouterUtilisateur()");
-        System.out.println(utilisateur);
         return utilisateurRepository.save(utilisateur);
     }
 }
