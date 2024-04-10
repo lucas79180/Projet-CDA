@@ -9,6 +9,7 @@
         <nav>
           <router-link to="/nouvelle-vente">Nouvelle Vente</router-link>
           <router-link to="/monprofil"> Mon profil</router-link>
+          <router-link to="/utilisateurs"> Utilisateurs </router-link>
           <button type="button" @click="logout"> Déconnecter</button>
         </nav>
       </section>
@@ -51,6 +52,7 @@
 import { RouterLink, RouterView } from 'vue-router'
 import { onMounted, ref, provide } from 'vue'
 import axios from '@/axios/instance'
+import router from "@/router.js";
 
 
 
@@ -60,11 +62,13 @@ provide('userConnect', user)
 function logout(){
   localStorage.removeItem('jwt')
   user.value = {}
+  router.push('/')
+  window.location.reload();
 }
 
 async function init(){
   try {
-    const result = await axios.get('/utilisateurs')
+    const result = await axios.get('/login')
     // si tout se passe bien,
     user.value = result.data
   } catch (error) {
