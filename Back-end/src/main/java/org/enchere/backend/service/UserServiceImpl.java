@@ -9,7 +9,6 @@ import org.enchere.backend.model.User;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -31,22 +30,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User consulterUserParId(Long id) {
-        Optional<User> optionalUser = userRepository.findById(id);
-        return optionalUser.orElse(null);
+        return userRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilisateur non trouvé avec l'ID : " + id));
     }
 
     @Override
     public void createUser(User user) {
-
         user.setMot_de_passe(passwordEncoder.encode(user.getMot_de_passe()));
-
         userRepository.save(user);
     }
 
     @Override
     public User recupererUser(String pseudo) {
         List<User> users = userRepository.findAll();
-        // pour l'instant, on n'arrirve pas à recupérer un membre par pseudo
+        // pour l'instant, on n'arrive pas à récupérer un membre par pseudo
         // donc on va chercher tous les membres en base et on fait une itération
         for (User user : users) {
             if (user.getPseudo().equals(pseudo)) {
@@ -54,5 +50,32 @@ public class UserServiceImpl implements UserService {
             }
         }
         return null;
+    }
+
+    @Override
+    public void supprimerUserParId(long id) {
+        userRepository.deleteById(id);
+    }
+
+    @Override
+    public User modifierUser(User user) {
+        // Récupérer l'utilisateur existant par son ID
+        User utilisateurExistant = userRepository.findById(user.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilisateur non trouvé avec l'ID : " + user.getId()));
+
+        // Mettre à jour les champs de l'utilisateur avec les valeurs de l'utilisateur modifié
+        utilisateurExistant.setPseudo(user.getPseudo());
+        utilisateurExistant.setPrenom(user.getPrenom());
+        utilisateurExistant.setNom(user.getNom());
+        utilisateurExistant.setMot_de_passe(user.getMot_de_passe());
+        utilisateurExistant.setEmail(user.getEmail());
+        utilisateurExistant.setCode_postal(user.getCode_postal());
+        utilisateurExistant.setVille(user.getVille());
+        utilisateurExistant.setRue(user.getRue());
+
+        // Enregistrer les modifications dans la base de données
+        userRepository.save(utilisateurExistant);
+
+        return utilisateurExistant;
     }
 }

@@ -12,5 +12,9 @@ public interface UserService {
 
     void createUser(User user);
 
-    public User recupererUser(String pseudo);
+    void supprimerUserParId(long id);
+
+    User modifierUser(User user);
+
+    User recupererUser(String pseudo);
 }
