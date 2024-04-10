@@ -1,7 +1,10 @@
 package org.enchere.backend.api;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.enchere.backend.model.User;
 import org.enchere.backend.security.JwtUtils;
+import org.enchere.backend.security.MyUserDetailsService;
+import org.enchere.backend.security.UtilisateurSpringSecurity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -29,5 +32,23 @@ public class LoginRestController {
 
         // je retourne ce token
         return jwt;
+    }
+
+
+
+    @Autowired
+    private MyUserDetailsService userDetailsService;
+
+
+    @GetMapping
+    public User getConnectedUser(HttpServletRequest request) throws Exception {
+        // 1 - je recupère le nom d'utilisateur correspondant au token JWT de la requête
+        String username = jwtUtils.getUserNameFromJwtToken(jwtUtils.parseJwt(request));
+        // 2 - je recupère l'utilisateur Spring Security correspondant à ce nom d'utilisateur
+
+        UtilisateurSpringSecurity user = (UtilisateurSpringSecurity) userDetailsService.loadUserByUsername(username);
+
+        // 3 - je renvoie le membre correspondant
+        return user.getUser();
     }
 }

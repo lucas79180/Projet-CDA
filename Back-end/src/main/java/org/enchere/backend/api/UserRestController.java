@@ -36,23 +36,8 @@ public class UserRestController {
         userService.createUser(user);
     }
 
-    @Autowired
-    private JwtUtils jwtUtils;
-    @Autowired
-    private AuthenticationConfiguration authenticationConfiguration;
-    @Autowired
-    private MyUserDetailsService userDetailsService;
 
-    @GetMapping
-    public User getConnectedUser(HttpServletRequest request) throws Exception {
-        // 1 - je recupère le nom d'utilisateur correspondant au token JWT de la requête
-        String username = jwtUtils.getUserNameFromJwtToken(jwtUtils.parseJwt(request));
-        // 2 - je recupère l'utilisateur Spring Security correspondant à ce nom d'utilisateur
-        UtilisateurSpringSecurity user = (UtilisateurSpringSecurity) userDetailsService.loadUserByUsername(username);
 
-        // 3 - je renvoie le membre correspondant
-        return user.getUser();
-    }
 
     @DeleteMapping("/{idUser}")
     public void supprimerUser(@PathVariable Long idUser) {
