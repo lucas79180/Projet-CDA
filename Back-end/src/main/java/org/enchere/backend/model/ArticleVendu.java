@@ -46,6 +46,15 @@ public class ArticleVendu {
     @JoinColumn(name = "no_utilisateur", nullable = false)
     private User vendeur;
 
+    @ManyToOne
+    private Categorie categorie;
+
+    @OneToOne(mappedBy = "articleVendu")
+    private Retrait retrait;
+
+    @OneToMany
+    private List<Enchere> encheres;
+
     public ArticleVendu() {
     }
 
