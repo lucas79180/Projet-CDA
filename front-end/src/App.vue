@@ -16,6 +16,7 @@
       <nav>
         <router-link to="/connexion">Connexion</router-link>
         <router-link to="/inscription">Inscription</router-link>
+
       </nav>
       </section>
     </header>

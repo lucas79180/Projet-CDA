@@ -12,7 +12,9 @@ import org.enchere.backend.security.UtilisateurSpringSecurity;
 import org.enchere.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -23,6 +25,11 @@ import java.util.List;
 public class UserRestController {
     @Autowired
     UserService userService;
+
+    @GetMapping
+    public  List<User>  getFormulaireUser() {
+        return userService.consulterUser();
+    }
 
     @PostMapping
     public void postUser(@RequestBody User user) {
@@ -47,4 +54,19 @@ public class UserRestController {
         return user.getUser();
     }
 
+    @DeleteMapping("/{idUser}")
+    public void supprimerUser(@PathVariable Long idUser) {
+        userService.supprimerUserParId(idUser);
+    }
+
+    @PutMapping("/{idUser}")
+    public void modifierUtilisateur(@PathVariable Long idUser, @Valid @RequestBody User userModifie) {
+        // Assurez-vous que l'ID de l'utilisateur à modifier correspond à celui fourni dans l'URL
+        if (!idUser.equals(userModifie.getId())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "L'ID de l'utilisateur dans l'URL ne correspond pas à celui dans le corps de la requête.");
+        }
+
+        // Utilisez le service pour mettre à jour l'utilisateur
+        userService.modifierUser(userModifie);
+    }
 }

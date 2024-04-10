@@ -22,7 +22,6 @@ const listeUsers = ref([])
 const listeErreurs = ref([])
 
 
-
 async function creerUser(){
  console.log(user.value);
   try {
@@ -34,7 +33,6 @@ async function creerUser(){
     listeErreurs.value = []
 
     // une fois qu'on a ajouté la membre, on recharge la liste des membres
-    //recupererUser()
 
     // on reinitialise le formulaire
     user.value.pseudo = ''
@@ -55,8 +53,6 @@ async function creerUser(){
       listeErreurs.value = error.response.data.errors
   }
 }
-
-console.log("user");
 
 </script>
 <template>
@@ -105,7 +101,6 @@ console.log("user");
       -->
       <button type="submit" @click="creerUser">Créer utilisateur</button>
     </form>
-
   </main>
 </template>
 
