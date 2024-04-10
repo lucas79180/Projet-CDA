@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -26,6 +28,9 @@ public class User {
     private String mot_de_passe;
     private int credit = 0;
     private boolean administrateur = false;
+
+    @OneToMany(mappedBy = "utilisateur")
+    private List<Enchere> encheres;
 
     public User(String pseudo, String nom, String prenom, String telephone, String code_postal, String email, String rue, String ville, String mot_de_passe) {
         this.pseudo = pseudo;

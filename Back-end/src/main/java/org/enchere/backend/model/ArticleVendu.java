@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -31,6 +32,15 @@ public class ArticleVendu {
     private int prixVente;
     // etatVente t'est présente que dans l'objet et pas dans la bdd
     private boolean etatVente;
+
+    @ManyToOne
+    private Categorie categorie;
+
+    @OneToOne(mappedBy = "articleVendu")
+    private Retrait retrait;
+
+    @OneToMany
+    private List<Enchere> encheres;
 
     public ArticleVendu() {
     }
