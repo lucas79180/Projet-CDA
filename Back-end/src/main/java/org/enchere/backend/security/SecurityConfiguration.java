@@ -54,10 +54,12 @@ public class SecurityConfiguration {
 
         // on autorise la requête http entrante en fonction de ces critères :
         http.authorizeHttpRequests(authorize -> authorize
-                        // si jamais la requête veut aller sur l'url "/pageConnecte" : alors on doit être authentifié (.authenticated())
-                        // si jamais la requête veut aller sur l'url "/pageAdmin" : alors on doit avoir le rôle admin (.hasRole("admin"))
-                        // pour toutes les autres requêtes : on autorise sans contraintes
-                        .requestMatchers("/**").permitAll()
+                        // Autoriser l'accès au profil après connexion
+                        .requestMatchers("/monprofil").authenticated()
+                        // Autoriser l'accès à la déconnexion après connexion
+                        .requestMatchers("/logout").authenticated()
+                        // Toutes les autres URL nécessitent une authentification
+                        .anyRequest().permitAll()
                 )
                 // on utilise une authentification basique (utilisateur / mot de passe)
                 .httpBasic(Customizer.withDefaults())

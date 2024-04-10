@@ -21,7 +21,7 @@ axiosInstance.interceptors.request.use(
     request => {
         // je vais récupérer depuis le localstorage le token JWT
         const jwt = localStorage.getItem("jwt");
-        console.log("jwt", jwt);
+
         // si jamais j'ai un token jwt en localstorage
         if (jwt != null) {
             // je met à jour ma requête HTTP en ajoutant l'entete 'Authorization' = Bearer XXXXXX_TOKEN_JWT_XXXXXX

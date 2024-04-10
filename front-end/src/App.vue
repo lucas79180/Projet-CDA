@@ -5,13 +5,19 @@
       <nav>
       <router-link  to="./" > <h1 class="title">ENI-Encheres</h1> </router-link>
       </nav>
+      <section  v-if="user.id">
+        <nav>
+          <router-link to="/nouvelle-vente">Nouvelle Vente</router-link>
+          <router-link to="/monprofil"> Mon profil</router-link>
+          <button type="button" @click="logout"> Déconnecter</button>
+        </nav>
+      </section>
+      <section v-else>
       <nav>
-        <router-link to="/nouvelle-vente">Nouvelle Vente</router-link>
-        <router-link to="/monprofil"> Mon profil</router-link>
         <router-link to="/connexion">Connexion</router-link>
         <router-link to="/inscription">Inscription</router-link>
-
       </nav>
+      </section>
     </header>
     <div class="content">
       <router-view></router-view>
@@ -24,6 +30,7 @@
       <div v-if="isHomePage" class="filters">
         <p>Catégories :</p>
       </div>
+
       <div v-if="isHomePage" class="select-container">
         <select>
           <option value="">Choisissez une catégorie</option>
@@ -39,15 +46,34 @@
     </footer>
   </div>
 </template>
-<script>
-export default {
-  name: 'App',
-  computed: {
-    isHomePage() {
-      return this.$route.path === '/';
-    }
+<script setup>
+import { RouterLink, RouterView } from 'vue-router'
+import { onMounted, ref, provide } from 'vue'
+import axios from '@/axios/instance'
+
+
+
+const user = ref({})
+provide('userConnect', user)
+
+function logout(){
+  localStorage.removeItem('jwt')
+  user.value = {}
+}
+
+async function init(){
+  try {
+    const result = await axios.get('/utilisateurs')
+    // si tout se passe bien,
+    user.value = result.data
+  } catch (error) {
+    console.log('erreur lors de la récupération du user', error);
   }
-};
+}
+
+onMounted(() => {
+  init()
+})
 </script>
 
 <style lang="css" src="./assets/main.css"></style>

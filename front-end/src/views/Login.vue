@@ -52,15 +52,12 @@ const errors = ref()
     emit('login')
     // 3 - on redirige sur la page d'accueil
     router.push('/')
+    window.location.reload();
   } catch (error) {
     // si jamais il y a une erreur => on met à jour le modèle  
     errors.value = 'erreur de connexion'
   }
-
-  
-  
  }
-
 </script>
 
 <template>
@@ -71,7 +68,6 @@ const errors = ref()
    <ul class="error" v-if="errors">
     <li class="error">{{errors}}</li>
    </ul>
-
     <!-- 
       on garde la balise form pour des raisons sémantiques (meilleure accessibilité, référencement internet)
       car on va envoyer une requête HTTP via Javascript
@@ -79,16 +75,16 @@ const errors = ref()
   <form>
         <!-- Pseudo -->
         <div class="form-element">
-            <!-- v-model : équivalent de th:field en vuejs -->
-          <FormTextElement label="Pseudo" :object="user" field="pseudo"/>
+          <label>Pseudo</label>
+          <!-- v-model : équivalent de th:field en vuejs -->
+          <input type="text" v-model="user.pseudo">
         </div>
-
         <!-- Mot de passe -->
         <div class="form-element">
-            <!-- v-model : équivalent de th:field en vuejs -->
-          <FormTextElement label="Mot de passe" :object="user" field="mot_de_passe"/>
+          <label>Mot de passe</label>
+          <!-- v-model : équivalent de th:field en vuejs -->
+          <input type="text" v-model="user.mot_de_passe">
         </div>
-
         <!-- Validation (on utilise un type button pour ne pas valider le formulaire)-->
         <button type="button" @click="login">Valider</button>
     </form>
