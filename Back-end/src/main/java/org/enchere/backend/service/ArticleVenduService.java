@@ -6,9 +6,8 @@ import java.util.List;
 
 public interface ArticleVenduService {
 
-    List<ArticleVendu> getAllArticleVendus();
-
-    ArticleVendu getArticleVenduById(int id);
-
-    void createArticleVendu(ArticleVendu articleVendu);
+    List<ArticleVendu> getAllArticles();
+    ArticleVendu getArticleById(int id);
+    ArticleVendu saveArticle(ArticleVendu article);
+    void deleteArticle(int id);
 }

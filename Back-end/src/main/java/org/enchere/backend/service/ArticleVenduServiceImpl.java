@@ -3,11 +3,12 @@ package org.enchere.backend.service;
 import org.enchere.backend.Repository.ArticleVenduRepository;
 import org.enchere.backend.model.ArticleVendu;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-
+@Service
 public class ArticleVenduServiceImpl implements ArticleVenduService {
 
     private final ArticleVenduRepository articleVenduRepository;
@@ -18,18 +19,22 @@ public class ArticleVenduServiceImpl implements ArticleVenduService {
     }
 
     @Override
-    public List<ArticleVendu> getAllArticleVendus() {
+    public List<ArticleVendu> getAllArticles() {
         return articleVenduRepository.findAll();
     }
 
     @Override
-    public ArticleVendu getArticleVenduById(int id) {
-        Optional<ArticleVendu> optionalArticleVendu = articleVenduRepository.findById((long) id);
-        return optionalArticleVendu.orElse(null);
+    public ArticleVendu getArticleById(int id) {
+        return articleVenduRepository.findById(id).orElse(null);
     }
 
     @Override
-    public void createArticleVendu(ArticleVendu articleVendu) {
-        articleVenduRepository.save(articleVendu);
+    public ArticleVendu saveArticle(ArticleVendu article) {
+        return articleVenduRepository.save(article);
+    }
+
+    @Override
+    public void deleteArticle(int id) {
+        articleVenduRepository.deleteById(id);
     }
 }
