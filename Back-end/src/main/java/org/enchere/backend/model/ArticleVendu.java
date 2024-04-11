@@ -72,4 +72,5 @@ public class ArticleVendu {
         this.encheres = encheres;
         this.vendeur = vendeur;
     }
+
 }
