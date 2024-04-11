@@ -24,7 +24,7 @@ public class ArticleVenduServiceImpl implements ArticleVenduService {
     }
 
     @Override
-    public ArticleVendu getArticleById(int id) {
+    public ArticleVendu getArticleById(Integer id) {
         return articleVenduRepository.findById(id).orElse(null);
     }
 
@@ -34,7 +34,7 @@ public class ArticleVenduServiceImpl implements ArticleVenduService {
     }
 
     @Override
-    public void deleteArticle(int id) {
+    public void deleteArticle(Integer id) {
         articleVenduRepository.deleteById(id);
     }
 }

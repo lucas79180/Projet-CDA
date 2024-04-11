@@ -22,7 +22,7 @@ public class RetraitController {
     }
 
     @GetMapping("/{id}")
-    public Retrait getRetraitById(@PathVariable int id) {
+    public Retrait getRetraitById(@PathVariable Integer id) {
         return retraitService.getRetraitById(id);
     }
 

@@ -13,14 +13,15 @@ import java.util.List;
 public class Categorie {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "no_categorie")
-    private long noCategorie;
+    private Integer noCategorie;
     private String libelle;
 
     @OneToMany(mappedBy = "categorie")
     private List<ArticleVendu> ArticleVendu;
 
-    public Categorie(long noCategorie, String libelle) {
+    public Categorie(Integer noCategorie, String libelle) {
         this.noCategorie = noCategorie;
         this.libelle = libelle;
     }

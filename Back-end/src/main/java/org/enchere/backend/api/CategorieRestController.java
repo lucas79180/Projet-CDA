@@ -9,7 +9,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/categories")
+@RequestMapping("/api/categories")
 public class CategorieRestController {
 
     @Autowired
@@ -21,7 +21,7 @@ public class CategorieRestController {
     }
 
     @GetMapping("/{id}")
-    public Categorie getCategoryById(@PathVariable long id) {
+    public Categorie getCategoryById(@PathVariable Integer id) {
         return categorieService.getCategoryById(id);
     }
 
@@ -31,7 +31,7 @@ public class CategorieRestController {
     }
 
     @PutMapping("/{id}")
-    public void updateCategory(@PathVariable long id, @RequestBody Categorie categorieDetails) {
+    public void updateCategory(@PathVariable Integer id, @RequestBody Categorie categorieDetails) {
         Categorie categorie = categorieService.getCategoryById(id);
         if (categorie != null) {
             categorie.setLibelle(categorieDetails.getLibelle());
@@ -40,7 +40,7 @@ public class CategorieRestController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCategory(@PathVariable long id) {
+    public void deleteCategory(@PathVariable Integer id) {
         categorieService.deleteCategory(id);
     }
 }

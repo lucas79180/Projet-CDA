@@ -19,7 +19,7 @@ public class CategorieServiceImpl implements CategorieService {
     }
 
     @Override
-    public Categorie getCategoryById(long id) {
+    public Categorie getCategoryById(Integer id) {
         return categorieRepository.findById(id).orElse(null);
     }
 
@@ -29,7 +29,7 @@ public class CategorieServiceImpl implements CategorieService {
     }
 
     @Override
-    public void deleteCategory(long id) {
+    public void deleteCategory(Integer id) {
         categorieRepository.deleteById(id);
     }
 

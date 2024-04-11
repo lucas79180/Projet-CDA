@@ -9,10 +9,10 @@ public interface CategorieService {
 
     List<Categorie> getAllCategories();
 
-    Categorie getCategoryById(long id);
+    Categorie getCategoryById(Integer id);
 
     void saveCategory(Categorie categorie);
 
-    void deleteCategory(long id);
+    void deleteCategory(Integer id);
 
 }
