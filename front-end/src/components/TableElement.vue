@@ -56,6 +56,11 @@
       <button @click="cancelEdit">Annuler</button>
     </form>
   </div>
+  <div v-if="showDialog" class="confirmation-dialog">
+    <p>Etes-vous sûr de vouloir supprimer cet utilisateur ?</p>
+    <button @click="deleteElement">Oui</button>
+    <button @click="cancelDelete">Annuler</button>
+  </div>
 </template>
 <script setup>
 import { defineProps, defineEmits, ref } from 'vue';
