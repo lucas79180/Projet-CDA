@@ -12,9 +12,9 @@ const user = ref({
   email : '',
   telephone : '',
   rue : '',
-  codePostal : '',
+  code_postal : '',
   ville: '',
-  motDePasse: '',
+  mot_de_passe: '',
 })
 
 
@@ -23,7 +23,6 @@ const listeErreurs = ref([])
 
 
 async function creerUser(){
- console.log(user.value);
   try {
     // on veut passer dans le corps de la requête HTTP le JSON correspondant à la valeur de notre modèle : membre
     await axios.post('/utilisateurs', user.value)

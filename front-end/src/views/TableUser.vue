@@ -1,27 +1,9 @@
-<template>
-  <main>
-    <!-- Affichage des erreurs -->
-    <ErrorsDisplay :errors="listeErreurs"/>
-
-    <!-- Affichage du composant de modification -->
-
-    <h2>Liste des utilisateurs</h2>
-
-    <!-- Affichage de la table des utilisateurs -->
-    <TableElement
-        @edit="(user) => edit(user)"
-        @delete="(user) => remove(user)"
-        :labels="['Pseudo', 'Prénom', 'Nom', 'Email', 'Telephone', 'Rue', 'code_postal', 'Ville']"
-        :fields="['pseudo', 'prenom', 'nom', 'email', 'telephone', 'rue', 'code_postal', 'ville']"
-        :listeUser="listeUsers"
-    />
-  </main>
-</template>
-
 <script setup>
+
 import {onMounted, ref} from "vue";
 import axios from "../axios/instance";
 import TableElement from "@/components/TableElement.vue";
+import ErrorsDisplay from "@/components/ErrorsDisplay.vue";
 
 
 const user = ref({
@@ -33,7 +15,7 @@ const user = ref({
   rue: '',
   code_postal: '',
   ville: '',
-  motDePasse: '',
+  mot_de_passe: '',
 })
 
 const listeUsers = ref([])
@@ -61,7 +43,35 @@ onMounted(() => {
 
 
 </script>
+<template>
+  <main>
+
+    <!--on affiche erreurs éventuelles (ne s'affiche que si la liste d'erreur n'est pas vide) -->
+    <ErrorsDisplay :errors="listeErreurs"/>
+    <h2>Liste des utilisateurs</h2>
+
+    <!-- TableElement est un composant définie dans components/TableElement.vue :
+          il va prendre en paramètres des propriétés (props) :
+              - labels (valeur = liste de Strings): correspond aux th de la table
+              - fields (valeur = liste de Strings): correspond aux attributs à afficher pour chaque élémentd e ma liste
+              - listeModel (valeur = référence vers une liste définie dans le javascript avec : const listemembres = ref([])):
+               correspond à la référence vers la variable du modèle pour laquelle on souhaite afficher le tableau
+
+      @edit="(membre) => edit(membre)"
+      lorsque TableElement va envoyer un événement emit('edit'), je vais appeler la méthode edit(membre) définie plus haut
+
+      @delete="(membre) => remove(membre)"
+      lorsque TableElement va envoyer un événement emit('delete'), je vais appeler la méthode remove(membre) définie plus haut
+      -->
+    <TableElement
+        @edit="(user) => edit(user)"
+        @delete="(user) => remove(user)"
+        :labels="['Pseudo', 'Prénom', 'Nom', 'Email', 'Telephone', 'Rue', 'Code postal', 'Ville']"
+        :fields="['pseudo', 'prenom', 'nom', 'email', 'telephone', 'rue', 'code_postal', 'ville']"
+        :listeUser="listeUsers" />
+
+  </main>
+</template>
 
 <style scoped>
-/* Ajoutez vos styles CSS ici */
 </style>
