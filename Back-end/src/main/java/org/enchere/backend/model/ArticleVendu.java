@@ -31,8 +31,9 @@ public class ArticleVendu {
     @Column(name = "prix_vente")
     private Integer prixVente;
     // etatVente t'est présente que dans l'objet et pas dans la bdd
-    private boolean etatVente;
+    //private boolean etatVente;
     @ManyToOne
+    @JoinColumn(name = "no_categorie")
     private Categorie categorie;
     @OneToOne(mappedBy = "articleVendu")
     private Retrait retrait;
@@ -54,7 +55,7 @@ public class ArticleVendu {
         this.dateFinEncheres = dateFinEncheres;
         this.miseAPrix = miseAPrix;
         this.prixVente = prixVente;
-        this.etatVente = etatVente;
+        //this.etatVente = etatVente;
         this.categorie = categorie;
         this.retrait = retrait;
         this.encheres = encheres;

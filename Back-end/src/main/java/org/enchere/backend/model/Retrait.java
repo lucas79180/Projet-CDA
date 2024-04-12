@@ -18,9 +18,9 @@ public class Retrait {
     private String rue;
     private String code_postal;
     private String ville;
+
     @OneToOne
-    private ArticleVendu article;
-    @OneToOne
+    @JoinColumn(name = "no_article")
     private ArticleVendu articleVendu;
 
     // Constructeur
@@ -32,7 +32,6 @@ public class Retrait {
         this.rue = rue;
         this.code_postal = code_postal;
         this.ville = ville;
-        this.article = article;
         this.articleVendu = articleVendu;
     }
 
@@ -40,7 +39,6 @@ public class Retrait {
         this.rue = rue;
         this.code_postal = code_postal;
         this.ville = ville;
-        this.article = article;
         this.articleVendu = articleVendu;
     }
 }

@@ -22,9 +22,11 @@ public class Enchere {
     private Integer montantEnchere;
 
     @ManyToOne
+    @JoinColumn(name = "no_utilisateur")
     private User utilisateur;
 
     @ManyToOne
+    @JoinColumn(name = "no_article")
     private ArticleVendu articleVendu;
 
 }

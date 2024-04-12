@@ -9,13 +9,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/categorie ")
+@RequestMapping("/categories")
 public class CategorieController {
 
     @Autowired
     private CategorieService categorieService;
 
-    @GetMapping("/")
+    //@GetMapping("/")
+    @ModelAttribute
     public List<Categorie> getAllCategories() {
         return categorieService.getAllCategories();
     }

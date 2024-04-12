@@ -15,8 +15,10 @@ public class CategorieRestController {
     @Autowired
     private CategorieService categorieService;
 
-    @GetMapping("/")
+    @GetMapping
     public List<Categorie> getAllCategories() {
+        System.out.println("\n --LOG-- Execution de getAllCategories");
+        System.out.println("\n --LOG-- Valeur : " + categorieService.getAllCategories());
         return categorieService.getAllCategories();
     }
 
