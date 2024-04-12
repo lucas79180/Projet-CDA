@@ -1,17 +1,12 @@
 package org.enchere.backend.api;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.enchere.backend.api.doc.SwaggerDoc;
 import org.enchere.backend.model.User;
 import org.enchere.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -24,11 +19,6 @@ import java.util.List;
 public class UserRestController {
     @Autowired
     UserService userService;
-    @Autowired
-    private JwtUtils jwtUtils;
-
-    @Value("${jwt.secret}")
-    private String secret;
 
     @GetMapping
     public  List<User>  getFormulaireUser() {
@@ -55,18 +45,5 @@ public class UserRestController {
 
         // Utilisez le service pour mettre à jour l'utilisateur
         userService.modifierUser(userModifie);
-    }
-
-    @GetMapping("/profil")
-    @ResponseStatus(HttpStatus.OK)
-    public User getCurrentUser(HttpServletRequest request) {
-        // Récupérer le token JWT à partir de la requête HTTP
-        String token = request.getHeader("Authorization").replace("Bearer ", "");
-
-        // Extraire le pseudo de l'utilisateur à partir du token JWT
-        String pseudo = jwtUtils.extractUsername(token, secret);
-
-        // Utiliser UserService pour récupérer les informations de l'utilisateur à partir du pseudo
-        return userService.recupererUser(pseudo);
     }
 }
