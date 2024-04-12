@@ -6,7 +6,8 @@ import InfoUser from "@/views/infoUser.vue";
 import User from "./views/User.vue";
 import Login from "./views/Login.vue";
 import TableUser from "@/views/TableUser.vue";
-import Confirmation from "@/views/Confirmation.vue"; // Assurez-vous de pointer vers le bon emplacement de votre composant NouvelleVente
+import Confirmation from "@/views/Confirmation.vue";
+import ForgotPassword from "@/views/ForgotPassword.vue"; // Assurez-vous de pointer vers le bon emplacement de votre composant NouvelleVente
 
 const routes = [
     {
@@ -45,6 +46,11 @@ const routes = [
         props: true,
         component: Confirmation
     },
+    {
+        path: '/forgot-password',
+        name: 'ForgotPassword',
+        component: ForgotPassword
+    }
 ];
 
 const router = createRouter({
