@@ -1,25 +1,3 @@
-<template>
-  <main>
-    <h1>Mon Profil</h1>
-
-    <!-- Afficher les informations de l'utilisateur -->
-    <div>
-      <p>Pseudo: {{ userInfo.pseudo }}</p>
-      <p>Prenom : {{ userInfo.prenom }}</p>
-      <p>Nom : {{ userInfo.nom }}</p>
-      <p>Email : {{ userInfo.email }}</p>
-      <p>Téléphone : {{ userInfo.telephone }}</p>
-      <p>Rue : {{ userInfo.rue }}</p>
-      <p>Code postal : {{ userInfo.code_postal }}</p>
-      <p>Ville : {{ userInfo.ville }}</p>
-
-      <!-- Ajoutez d'autres champs ici selon les informations que vous avez -->
-
-      <!-- Bouton Modifier -->
-      <button @click="modifierProfil">Modifier</button>
-    </div>
-  </main>
-</template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
@@ -49,7 +27,96 @@ const modifierProfil = () => {
   router.push('/update')
 }
 </script>
+<template>
+  <main>
+    <div class="container">
+      <h1 class="title">Mon Profil</h1>
+
+      <div class="profile-box">
+        <div class="user-info">
+          <div class="info-item">
+            <p><strong>Pseudo:</strong></p>
+            <p>{{ userInfo.pseudo }}</p>
+          </div>
+
+          <div class="info-item">
+            <p><strong>Prénom:</strong></p>
+            <p>{{ userInfo.prenom }}</p>
+          </div>
+
+          <div class="info-item">
+            <p><strong>Nom:</strong></p>
+            <p>{{ userInfo.nom }}</p>
+          </div>
+
+          <div class="info-item">
+            <p><strong>Email:</strong></p>
+            <p>{{ userInfo.email }}</p>
+          </div>
+
+          <div class="info-item">
+            <p><strong>Téléphone:</strong></p>
+            <p>{{ userInfo.telephone }}</p>
+          </div>
+
+          <div class="info-item">
+            <p><strong>Adresse:</strong></p>
+            <p>{{ userInfo.rue }}, {{ userInfo.code_postal }}, {{ userInfo.ville }}</p>
+          </div>
+
+          <!-- Ajouter d'autres champs ici selon les informations disponibles -->
+
+          <button @click="modifierProfil">Modifier</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</template>
 
 <style scoped>
-/* Ajoutez votre style CSS ici si nécessaire */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.profile-box {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+  padding: 30px;
+  width: 100%;
+  max-width: 600px; /* ajustement de la largeur maximale */
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-item {
+  justify-content: center;
+
+}
+
+button {
+  margin-top: 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
 </style>
