@@ -1,8 +1,10 @@
+
+
 <template>
   <table>
     <tr>
       <!-- je crée un th pour chaque label spécifié dans la prop : labels -->
-      <th v-for="label in labels" :key="label">{{ label }}</th>
+      <th v-for="label in labels">{{ label }}</th>
       <th></th>
     </tr>
 
@@ -13,8 +15,12 @@
 
       <!-- Boutons Modifier / Supprimer -->
       <td>
-        <button class="link-button" @click="editElement(element)">Modifier</button>
-        <button class="link-button delete-button" @click="showConfirmationDialog(element)">Supprimer</button>
+        <button class="link-button" @click="editElement(element)">
+          <i class="fas fa-pencil-alt"></i> <!-- Icône de crayon -->
+        </button>
+        <button class="link-button delete-button" @click="showConfirmationDialog(element)">
+          <i class="fas fa-times"></i> <!-- Icône de croix -->
+        </button>
       </td>
     </tr>
   </table>
@@ -51,7 +57,6 @@
     </form>
   </div>
 </template>
-
 <script setup>
 import { defineProps, defineEmits, ref } from 'vue';
 
@@ -99,7 +104,80 @@ const cancelEdit = () => {
 const modifyElement = (element) => {
   emit('modify', element);
 }
+
+
 </script>
 
 <style scoped>
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-family: Arial, sans-serif;
+}
+
+/* Style pour les cellules d'en-tête */
+th {
+  background-color: #007bff;
+  color: #fff;
+  padding: 12px 15px;
+  text-align: left;
+}
+
+/* Style pour les cellules de données */
+td {
+  padding: 10px 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Style pour les boutons Modifier/Supprimer */
+.link-button {
+  background-color: #007bff;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 8px 12px;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+.link-button:hover {
+  background-color: #0056b3;
+}
+
+.delete-button {
+  background-color: #dc3545;
+}
+
+.delete-button:hover {
+  background-color: #c82333;
+}
+
+/* Style pour la confirmation dialog */
+.confirmation-dialog {
+  border: 1px solid #ddd;
+  padding: 20px;
+  background-color: #f9f9f9;
+  margin-top: 10px;
+}
+
+.confirmation-dialog p {
+  margin-bottom: 10px;
+}
+
+.confirmation-dialog button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-right: 5px;
+}
+
+.confirmation-dialog button:hover {
+  background-color: #0056b3;
+}
 </style>

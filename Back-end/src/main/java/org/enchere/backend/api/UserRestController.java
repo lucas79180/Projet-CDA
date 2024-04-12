@@ -42,6 +42,7 @@ public class UserRestController {
         if (!idUser.equals(userModifie.getId())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "L'ID de l'utilisateur dans l'URL ne correspond pas à celui dans le corps de la requête.");
         }
+
         // Utilisez le service pour mettre à jour l'utilisateur
         userService.modifierUser(userModifie);
     }
