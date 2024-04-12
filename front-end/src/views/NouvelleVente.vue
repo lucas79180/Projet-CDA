@@ -7,7 +7,7 @@
           <FormTextElement label="Nom de l'article" type="text" :object="article" field="nomArticle"/>
         </div>
         <div class="form-group">
-          <label for="categorie">Description :</label>
+          <label for="description">Description :</label>
           <textarea id="description" v-model="article['description']" rows="4" required></textarea>
         </div>
         <div class="form-group">
