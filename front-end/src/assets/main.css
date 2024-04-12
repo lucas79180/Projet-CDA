@@ -60,12 +60,12 @@ input[type="text"],
 input[type="email"],
 input[type="password"],
 input[type="tel"] {
-  width: 100%;
-  padding: 12px; /* Augmenter la taille de la police */
-  border: none;
-  border-radius: 6px; /* Augmenter le rayon des coins */
-  font-size: 12px; /* Taille de la police */
-  color: #5a5a5a; /* Gris foncé */
+  width: calc(100% - 24px); /* Ajustement pour le padding */
+  padding: 8px;
+  border: 1px solid #cccccc;
+  border-radius: 6px;
+  font-size: 14px;
+  margin-bottom: 15px; /* Augmentation de l'espace entre l'étiquette et le champ de saisie */
 }
 
 
