@@ -198,9 +198,6 @@ export default {
 };
 </script>
 
-
-
-
 <style scoped>
 /* Vos styles CSS existants */
 
