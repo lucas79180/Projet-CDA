@@ -44,6 +44,7 @@ public class LoginRestController {
         // Retourner le token JWT
         return jwt;
     }
+
     @GetMapping
     public User getConnectedUser(HttpServletRequest request) throws Exception {
         // 1 - je recupère le nom d'utilisateur correspondant au token JWT de la requête

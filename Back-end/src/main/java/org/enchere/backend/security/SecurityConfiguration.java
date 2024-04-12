@@ -54,6 +54,7 @@ public class SecurityConfiguration {
 
         // on autorise la requête http entrante en fonction de ces critères :
         http.authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/**").permitAll()
                         // Autoriser l'accès au profil après connexion
                         .requestMatchers("/monprofil").authenticated()
                         // Autoriser l'accès à la déconnexion après connexion
