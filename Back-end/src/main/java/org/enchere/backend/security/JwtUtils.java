@@ -2,8 +2,7 @@ package org.enchere.backend.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
+
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -60,10 +59,5 @@ public class JwtUtils {
             System.out.println("error : " + e.getStackTrace());
         }
         return false;
-    }
-
-    public String extractUsername(String token, String secret) {
-        Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
-        return claims.getSubject();
     }
 }
