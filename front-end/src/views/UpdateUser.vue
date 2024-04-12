@@ -1,30 +1,52 @@
 <template>
-  <div>
-    <h1>Modifier Mon Profil</h1>
-
+  <div class="container">
+    <h1 class="title">Modifier Mon Profil</h1>
     <!-- Formulaire de modification -->
-    <form @submit.prevent="modifierProfil(userInfo.value)">
-      <label for="pseudo">Pseudo:</label>
-      <input type="text" id="pseudo" v-model="userInfo.pseudo">
-      <input type="text" id="prenom" v-model="userInfo.prenom">
-      <input type="text" id="nom" v-model="userInfo.nom">
-      <input type="text" id="email" v-model="userInfo.email">
-      <input type="text" id="telephone" v-model="userInfo.telephone">
-      <input type="text" id="rue" v-model="userInfo.rue">
-      <input type="text" id="code_postal" v-model="userInfo.code_postal">
-      <input type="text" id="ville" v-model="userInfo.ville">
+    <form class="profile-form" @submit.prevent="modifierProfil(userInfo.value)">
+      <div class="form-group">
+        <label for="pseudo">Pseudo:</label>
+        <input type="text" id="pseudo" v-model="userInfo.pseudo">
+      </div>
+      <div class="form-group">
+        <label for="prenom">Prénom:</label>
+        <input type="text" id="prenom" v-model="userInfo.prenom">
+      </div>
+      <div class="form-group">
+        <label for="nom">Nom:</label>
+        <input type="text" id="nom" v-model="userInfo.nom">
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="text" id="email" v-model="userInfo.email">
+      </div>
+      <div class="form-group">
+        <label for="telephone">Téléphone:</label>
+        <input type="text" id="telephone" v-model="userInfo.telephone">
+      </div>
+      <div class="form-group">
+        <label for="rue">Rue:</label>
+        <input type="text" id="rue" v-model="userInfo.rue">
+      </div>
+      <div class="form-group">
+        <label for="code_postal">Code Postal:</label>
+        <input type="text" id="code_postal" v-model="userInfo.code_postal">
+      </div>
+      <div class="form-group">
+        <label for="ville">Ville:</label>
+        <input type="text" id="ville" v-model="userInfo.ville">
+      </div>
 
       <!-- Ajoutez d'autres champs ici selon les informations que vous avez -->
 
-      <button type="submit">Enregistrer</button>
+      <button type="submit" class="submit-btn">Enregistrer</button>
     </form>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import {ref, onMounted} from 'vue'
 import axios from "@/axios/instance.js";
-import { useRouter } from 'vue-router'
+import {useRouter} from 'vue-router'
 
 const router = useRouter()
 
