@@ -32,6 +32,9 @@ public class User {
     @OneToMany(mappedBy = "utilisateur")
     private List<Enchere> encheres;
 
+    @OneToMany(mappedBy = "vendeur", cascade = CascadeType.ALL)
+    private List<ArticleVendu> articlesVendu;
+
     public User(String pseudo, String nom, String prenom, String telephone, String code_postal, String email, String rue, String ville, String mot_de_passe) {
         this.pseudo = pseudo;
         this.nom = nom;
@@ -44,9 +47,26 @@ public class User {
         this.mot_de_passe = mot_de_passe;
     }
 
+    public User(Long id, String pseudo, String nom, String prenom, String telephone, String code_postal, String email, String rue, String ville, String mot_de_passe, int credit, boolean administrateur, List<Enchere> encheres, List<ArticleVendu> articlesVendu) {
+        this.id = id;
+        this.pseudo = pseudo;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.telephone = telephone;
+        this.code_postal = code_postal;
+        this.email = email;
+        this.rue = rue;
+        this.ville = ville;
+        this.mot_de_passe = mot_de_passe;
+        this.credit = credit;
+        this.administrateur = administrateur;
+        this.encheres = encheres;
+        this.articlesVendu = articlesVendu;
+    }
+
     @Override
     public String toString() {
-        return "User : " +
+        return "User{" +
                 "id=" + id +
                 ", pseudo='" + pseudo + '\'' +
                 ", nom='" + nom + '\'' +
@@ -59,6 +79,8 @@ public class User {
                 ", mot_de_passe='" + mot_de_passe + '\'' +
                 ", credit=" + credit +
                 ", administrateur=" + administrateur +
+                ", encheres=" + encheres +
+                ", articlesVendu=" + articlesVendu +
                 '}';
     }
 }

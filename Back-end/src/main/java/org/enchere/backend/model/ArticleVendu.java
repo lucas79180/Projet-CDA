@@ -32,26 +32,32 @@ public class ArticleVendu {
     private Integer prixVente;
     // etatVente t'est présente que dans l'objet et pas dans la bdd
     private boolean etatVente;
-
     @ManyToOne
     private Categorie categorie;
-
     @OneToOne(mappedBy = "articleVendu")
     private Retrait retrait;
-
     @OneToMany
     private List<Enchere> encheres;
+
+    @ManyToOne
+    @JoinColumn(name = "no_utilisateur", nullable = false)
+    private User vendeur;
 
     public ArticleVendu() {
     }
 
-    public ArticleVendu(String nomArticle, String description, LocalDateTime dateDebutEncheres, LocalDateTime dateFinEncheres, Integer miseAPrix, Integer prixVente) {
+    public ArticleVendu(Integer noArticle, String nomArticle, String description, LocalDateTime dateDebutEncheres, LocalDateTime dateFinEncheres, Integer miseAPrix, Integer prixVente, boolean etatVente, Categorie categorie, Retrait retrait, List<Enchere> encheres, User vendeur) {
+        this.noArticle = noArticle;
         this.nomArticle = nomArticle;
         this.description = description;
         this.dateDebutEncheres = dateDebutEncheres;
         this.dateFinEncheres = dateFinEncheres;
         this.miseAPrix = miseAPrix;
         this.prixVente = prixVente;
+        this.etatVente = etatVente;
+        this.categorie = categorie;
+        this.retrait = retrait;
+        this.encheres = encheres;
+        this.vendeur = vendeur;
     }
-
 }
