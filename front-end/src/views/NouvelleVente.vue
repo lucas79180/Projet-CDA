@@ -54,24 +54,7 @@
 
 <script>
 import axios from 'axios';
-import {onMounted, ref} from "vue"; // Importez axios si vous utilisez pour faire des requêtes HTTP
-
-// listeGenres : va être utilisé pour remplir notre table
-const categories = ref([])
-
-// errors : va être utilisé pour lister nos erreurs
-const errors =  ref([])
-
-async function init() {
-
-  // initialise la liste des catégories
-  let reponseHTTP = await axios.get('/categories')
-  categories.value = reponseHTTP.data
-}
-
-onMounted(() => {
-  init()
-})
+import { onMounted, ref } from "vue";
 
 export default {
   data() {
@@ -87,33 +70,39 @@ export default {
           rue: '',
           codePostal: '',
           ville: ''
-        },
+        }
       },
       categories: [] // Tableau pour stocker les catégories
     };
   },
   methods: {
-    submitForm() {
-      // Envoyer l'article à votre API backend (utilisez axios ou un autre client HTTP)
-      axios.post('/api/articles', this.article)
-          .then(response => {
-            // Traitement de la réponse ou redirection vers une autre page
-            console.log(response.data);
-            // Redirection vers une autre page par exemple
-            this.$router.push('/articles/' + response.data.id);
-          })
-          .catch(error => {
-            // Gestion des erreurs
-            console.error('Erreur lors de la création de l\'article : ', error);
-          });
+    async submitForm() {
+      try {
+        const response = await axios.post('/api/articles', this.article);
+        console.log(response.data);
+        this.$router.push('/articles/' + response.data.id);
+      } catch (error) {
+        console.error('Erreur lors de la création de l\'article : ', error);
+      }
     },
     cancel() {
-      // Redirection vers une autre page ou traitement pour annuler l'action
       console.log('Annulation de la création de l\'article');
     },
+    async init() {
+      try {
+        const response = await axios.get('/categories');
+        this.categories = response.data;
+      } catch (error) {
+        console.error('Erreur lors de la récupération des catégories : ', error);
+      }
+    }
+  },
+  mounted() {
+    this.init();
   }
 }
 </script>
+
 
 
 
