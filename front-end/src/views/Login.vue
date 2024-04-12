@@ -48,16 +48,19 @@ const errors = ref()
     // 1 - on met le token recuperé dans localstorage
     localStorage.setItem('jwt', result.data);
 
+
     // 2 - on emet un événement 'login' pour que le composant APP recharge la barre de navigation
     emit('login')
     // 3 - on redirige sur la page d'accueil
-    router.push('/')
+     await router.push('/')
     window.location.reload();
   } catch (error) {
     // si jamais il y a une erreur => on met à jour le modèle  
     errors.value = 'erreur de connexion'
   }
  }
+
+localStorage.setItem('userInfo', JSON.stringify(user.value.pseudo));
 </script>
 
 <template>

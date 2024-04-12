@@ -56,6 +56,7 @@ import router from "@/router.js";
 
 
 
+
 const user = ref({})
 provide('userConnect', user)
 
@@ -63,7 +64,6 @@ function logout(){
   localStorage.removeItem('jwt')
   user.value = {}
   router.push('/')
-  window.location.reload();
 }
 
 async function init(){
@@ -80,5 +80,12 @@ onMounted(() => {
   init()
 })
 </script>
-
+<script>
+export default {
+  name: 'App',
+  computed: {
+    isHomePage() {
+      return this.$route.path === '/';
+    }}}
+</script>
 <style lang="css" src="./assets/main.css"></style>
