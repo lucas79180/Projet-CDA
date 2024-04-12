@@ -3,46 +3,39 @@
     <div class="form-container">
       <h2 class="form-title">Nouvelle vente</h2>
       <form class="form" @submit.prevent="submitForm">
+        <!-- Champs du formulaire pour l'article -->
         <div class="form-group">
-          <label for="nom-article">Article:</label>
-          <input type="text" id="nom-article" v-model="article.nomArticle" required>
+          <FormTextElement label="Nom de l'article" type="text" :object="article" field="nomArticle"/>
         </div>
         <div class="form-group">
-          <label for="description">Description:</label>
-          <textarea id="description" v-model="article.description" rows="4" required></textarea>
+          <textarea id="description" v-model="article['description']" rows="4" required></textarea>
         </div>
         <div class="form-group">
           <label for="categorie">Catégorie:</label>
-          <select id="categorie" v-model="article.categorie" required>
+          <select id="categorie" v-model="article['categorie']" required>
             <option value="" disabled>Sélectionnez une catégorie</option>
             <option v-for="categorie in categories" :key="categorie.noCategorie" :value="categorie.noCategorie">{{ categorie.libelle }}</option>
           </select>
         </div>
         <div class="form-group">
-          <label for="photo">Photo de l'article:</label>
-          <input type="file" id="photo" @change="handleFileUpload" accept="image/*">
-          <!-- Ajoutez ici un code pour afficher la photo -->
+          <FormTextElement label="Mise à prix" type="number" :object="article" field="miseAPrix" required/>
         </div>
         <div class="form-group">
-          <label for="prix">Mise à prix:</label>
-          <input type="number" id="prix" v-model="article.miseAPrix" required>
+          <FormTextElement label="Début de l'enchère" type="datetime-local" :object="article" field="dateDebutEncheres" required/>
         </div>
         <div class="form-group">
-          <label for="date-debut">Début de l'enchère:</label>
-          <input type="datetime-local" id="date-debut" v-model="article.dateDebutEncheres" required>
+          <FormTextElement label="Fin de l'enchère" type="datetime-local" :object="article" field="dateFinEncheres" required/>
         </div>
         <div class="form-group">
-          <label for="date-fin">Fin de l'enchère:</label>
-          <input type="datetime-local" id="date-fin" v-model="article.dateFinEncheres" required>
+          <FormTextElement label="Retrait - Rue" type="text" :object="article.retrait" field="rue" required/>
         </div>
         <div class="form-group">
-          <label for="retrait">Retrait:</label>
-          <div class="address">
-            <input type="text" id="street" v-model="article.retrait.rue" placeholder="Rue" required>
-            <input type="text" id="postal-code" v-model="article.retrait.codePostal" placeholder="Code postal" required>
-            <input type="text" id="city" v-model="article.retrait.ville" placeholder="Ville" required>
-          </div>
+          <FormTextElement label="Retrait - Code Postal" type="text" :object="article.retrait" field="codePostal" required/>
         </div>
+        <div class="form-group">
+          <FormTextElement label="Retrait - Ville" type="text" :object="article.retrait" field="ville" required/>
+        </div>
+        <!-- Actions du formulaire -->
         <div class="form-actions">
           <button type="submit">Enregistrer</button>
           <button type="button" @click="cancel">Annuler</button>
@@ -53,54 +46,71 @@
 </template>
 
 <script>
+import FormTextElement from "@/components/FormTextElement.vue";
 import axios from 'axios';
 import { onMounted, ref } from "vue";
 
 export default {
-  data() {
-    return {
-      article: {
-        nomArticle: '',
-        description: '',
-        categorie: null,
-        miseAPrix: 0,
-        dateDebutEncheres: '',
-        dateFinEncheres: '',
-        retrait: {
-          rue: '',
-          codePostal: '',
-          ville: ''
-        }
-      },
-      categories: [] // Tableau pour stocker les catégories
-    };
+  components: {
+    FormTextElement
   },
-  methods: {
-    async submitForm() {
-      try {
-        const response = await axios.post('/api/articles', this.article);
-        console.log(response.data);
-        this.$router.push('/articles/' + response.data.id);
-      } catch (error) {
-        console.error('Erreur lors de la création de l\'article : ', error);
+  setup() {
+    const article = ref({
+      nomArticle: '',
+      description: '',
+      categorie: null,
+      miseAPrix: 0,
+      dateDebutEncheres: '',
+      dateFinEncheres: '',
+      retrait: {
+        rue: '',
+        codePostal: '',
+        ville: ''
       }
-    },
-    cancel() {
-      console.log('Annulation de la création de l\'article');
-    },
-    async init() {
+    });
+
+    const categories = ref([]);
+    const listeErreurs = ref([]);
+
+    async function recupererCategories() {
       try {
-        const response = await axios.get('/categories');
-        this.categories = response.data;
-      } catch (error) {
-        console.error('Erreur lors de la récupération des catégories : ', error);
+        console.log("--LOG-- recupererCategories");
+        const reponseHTTP = await axios.get('/categories');
+        categories.value = reponseHTTP.data;
+        console.log("--LOG-- reponseHTTP.data : " + reponseHTTP.data);
+        console.log("--LOG-- categories : " + categories);
+      } catch (erreur) {
+        console.error("Erreur lors de la récupération des catégories:", erreur);
+        listeErreurs.value.push("Erreur lors de la récupération des catégories.");
       }
     }
-  },
-  mounted() {
-    this.init();
+
+    onMounted(() => {
+      recupererCategories();
+    });
+
+    async function submitForm() {
+      try {
+        // Envoyer les données à votre backend avec axios
+      } catch (erreur) {
+        console.error("Erreur lors de l'envoi du formulaire:", erreur);
+        listeErreurs.value.push("Erreur lors de l'envoi du formulaire.");
+      }
+    }
+
+    function cancel() {
+      // Logique d'annulation du formulaire
+    }
+
+    return {
+      article,
+      categories,
+      listeErreurs,
+      submitForm,
+      cancel
+    };
   }
-}
+};
 </script>
 
 
