@@ -60,7 +60,7 @@ async function creerUser(){
     <!--on affiche erreurs éventuelles (ne s'affiche que si la liste d'erreur n'est pas vide) -->
     <ErrorsDisplay :errors="listeErreurs"/>
 
-    <h1>Ajout membre</h1>
+    <h1>Inscription</h1>
 
     <!--
         Je vais créer une balise form juste pour des raisons sémantiques (accessibilité, référencement par les moteurs de recherche)
@@ -104,5 +104,62 @@ async function creerUser(){
 </template>
 
 <style scoped>
+/* Style général */
+main {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Pour centrer verticalement */
+}
+
+h1 {
+  margin-bottom: 10px;
+  color: #333333;
+  text-align: center;
+}
+
+form {
+  width: 100%; /* Pour s'assurer que le formulaire occupe toute la largeur disponible */
+}
+
+form {
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #666666;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="tel"] {
+  width: calc(100% - 24px); /* Ajustement pour le padding */
+  padding: 6px; /* Réduction de la taille du padding */
+  border: 1px solid #cccccc;
+  border-radius: 6px;
+  font-size: 12px; /* Réduction de la taille de la police */
+}
+
+button {
+  width: calc(100% - 24px); /* Ajustement pour le padding */
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  background-color: #004981;
+  color: #ffffff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 10px; /* Ajout d'espace entre le dernier champ et le bouton */
+}
+
+button:hover {
+  background-color: #0056b3;
+}
 
 </style>

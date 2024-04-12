@@ -65,3 +65,76 @@ function forgotPassword() {
   router.push('/forgot-password');
 }
 </script>
+<style scoped>
+/* Style général */
+main {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Pour centrer verticalement */
+}
+
+h1 {
+  margin-bottom: 20px;
+  color: #333333;
+  text-align: center;
+}
+
+ul.error {
+  color: #ff0000;
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.form-element {
+  margin-bottom: 20px; /* Augmentation de l'espace entre les champs de saisie */
+  width: 100%;
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: 16px; /* Augmentation de l'espace entre les étiquettes et les champs de saisie */
+  color: #666666;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="tel"] {
+  width: calc(100% - 24px); /* Ajustement pour le padding */
+  padding: 10px; /* Augmentation de la taille du padding */
+  border: 1px solid #cccccc;
+  border-radius: 6px;
+  font-size: 14px;
+  margin-bottom: 15px; /* Augmentation de l'espace entre les champs de saisie */
+}
+
+button {
+  width: calc(100% - 24px); /* Ajustement pour le padding */
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  background-color: #004981;
+  color: #ffffff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:last-child {
+  margin-top: 10px; /* Ajout de l'espace entre les boutons */
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+
+</style>
