@@ -20,26 +20,30 @@ public class LoginRestController {
     private JwtUtils jwtUtils;
     @Autowired
     AuthenticationConfiguration authenticationConfiguration;
-
-    @PostMapping
-    public String login(@RequestBody User user) throws Exception {
-        Authentication authenticationToken = new UsernamePasswordAuthenticationToken(user.getPseudo(), user.getMot_de_passe());
-        Authentication authentication = authenticationConfiguration.getAuthenticationManager().authenticate(authenticationToken);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        // j'appèle la méthode qui génère un JWT à partir du contexte Spring d'autentification
-        String jwt = jwtUtils.generateJwtToken(authentication);
-
-        // je retourne ce token
-        return jwt;
-    }
-
-
-
     @Autowired
     private MyUserDetailsService userDetailsService;
 
+    @PostMapping
+    public String login(@RequestBody User user) throws Exception {
+        // Créer une chaîne d'identification qui peut être soit le pseudo, soit l'email
+        String identifier = user.getPseudo();
+        if (identifier == null || identifier.isEmpty()) {
+            identifier = user.getEmail();
+        }
 
+        // Créer une authentification basée sur l'identifiant (pseudo ou email) et le mot de passe
+        Authentication authenticationToken = new UsernamePasswordAuthenticationToken(identifier, user.getMot_de_passe());
+
+        // Authentifier l'utilisateur
+        Authentication authentication = authenticationConfiguration.getAuthenticationManager().authenticate(authenticationToken);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        // Générer le token JWT
+        String jwt = jwtUtils.generateJwtToken(authentication);
+
+        // Retourner le token JWT
+        return jwt;
+    }
     @GetMapping
     public User getConnectedUser(HttpServletRequest request) throws Exception {
         // 1 - je recupère le nom d'utilisateur correspondant au token JWT de la requête

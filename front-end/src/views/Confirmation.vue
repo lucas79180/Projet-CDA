@@ -27,12 +27,4 @@ onMounted(async () => {
 });
 </script>
 
-<template>
-  <div>
-    <h2>Etes-vous sûr de vouloir supprimer l'utilisateur : {{ user.pseudo }} ?</h2>
-    <form class="confirmation-form">
-      <button type="button" @click="remove" class="confirm-button">Confirmer</button>
-      <button type="button" @click="cancel" class="link-button cancel-button">Annuler</button>
-    </form>
-  </div>
-</template>
+

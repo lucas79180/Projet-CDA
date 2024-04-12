@@ -1,17 +1,11 @@
 package org.enchere.backend.api;
 
-
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.enchere.backend.api.doc.SwaggerDoc;
 import org.enchere.backend.model.User;
-import org.enchere.backend.security.JwtUtils;
-import org.enchere.backend.security.MyUserDetailsService;
-import org.enchere.backend.security.UtilisateurSpringSecurity;
 import org.enchere.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -37,8 +31,6 @@ public class UserRestController {
     }
 
 
-
-
     @DeleteMapping("/{idUser}")
     public void supprimerUser(@PathVariable Long idUser) {
         userService.supprimerUserParId(idUser);
@@ -50,7 +42,6 @@ public class UserRestController {
         if (!idUser.equals(userModifie.getId())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "L'ID de l'utilisateur dans l'URL ne correspond pas à celui dans le corps de la requête.");
         }
-
         // Utilisez le service pour mettre à jour l'utilisateur
         userService.modifierUser(userModifie);
     }
