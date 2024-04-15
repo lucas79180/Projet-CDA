@@ -10,6 +10,8 @@ public interface UserService {
 
     User consulterUserParId(Long id);
 
+    User consulterUserParEmail(String email);
+
     void createUser(User user);
 
     void supprimerUserParId(long id);

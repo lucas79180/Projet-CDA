@@ -107,7 +107,7 @@ const modifierProfil = () => {
 
 button {
   margin-top: 20px;
-  background-color: #007bff;
+  background-color: #004981;
   color: #fff;
   border: none;
   padding: 10px 20px;

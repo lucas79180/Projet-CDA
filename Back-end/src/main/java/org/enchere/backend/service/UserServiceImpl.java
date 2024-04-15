@@ -34,6 +34,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User consulterUserParEmail(String email) {
+        return (User) userRepository.findByEmail(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilisateur non trouvé avec l'email : " + email));
+    }
+
+    @Override
     public void createUser(User user) {
         user.setMot_de_passe(passwordEncoder.encode(user.getMot_de_passe()));
         userRepository.save(user);

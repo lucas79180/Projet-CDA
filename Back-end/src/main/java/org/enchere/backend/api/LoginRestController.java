@@ -1,16 +1,23 @@
 package org.enchere.backend.api;
 
+import com.microsoft.sqlserver.jdbc.StringUtils;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.enchere.backend.model.User;
 import org.enchere.backend.security.JwtUtils;
 import org.enchere.backend.security.MyUserDetailsService;
 import org.enchere.backend.security.UtilisateurSpringSecurity;
+import org.enchere.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @CrossOrigin
@@ -22,6 +29,10 @@ public class LoginRestController {
     AuthenticationConfiguration authenticationConfiguration;
     @Autowired
     private MyUserDetailsService userDetailsService;
+    @Autowired
+    UserService userService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @PostMapping
     public String login(@RequestBody User user) throws Exception {
@@ -55,5 +66,18 @@ public class LoginRestController {
 
         // 3 - je renvoie le membre correspondant
         return user.getUser();
+    }
+    @PutMapping("/{email}")
+    public User modifierUtilisateur(@PathVariable String email, @RequestBody User utilisateurModifie) throws ChangeSetPersister.NotFoundException {
+        // Retrieve the existing user by their ID
+        User utilisateurExistant = userService.consulterUserParEmail(email);
+
+        // Update the user's fields with the values of the modified user
+        if (!StringUtils.isEmpty(utilisateurModifie.getMot_de_passe())) {
+            utilisateurExistant.setMot_de_passe(passwordEncoder.encode(utilisateurModifie.getMot_de_passe()));
+        }
+
+        // Save the changes to the database via the service
+        return userService.modifierUser(utilisateurExistant);
     }
 }

@@ -1,42 +1,15 @@
-<template>
-  <main>
-    <h1>Login</h1>
-    <ul class="error" v-if="errors">
-      <li class="error">{{errors}}</li>
-    </ul>
-    <form>
-      <div class="form-element">
-        <label>Pseudo</label>
-        <input type="text" v-model="user.pseudo">
-      </div>
-      <div class="form-element">
-        <label>Mot de passe</label>
-        <input type="password" v-model="user.mot_de_passe">
-      </div>
-      <div class="form-element">
-        <label>
-          <input type="checkbox" v-model="user.se_souvenir_de_moi">
-          Se souvenir de moi
-        </label>
-      </div>
-      <button type="button" @click="login">Valider</button>
-      <button type="button" @click="forgotPassword">Mot de passe oublié ?</button>
-    </form>
-  </main>
-</template>
-
 <script setup>
 import axios from '@/axios/instance'
 import router from '@/router'
-import {ref, onMounted} from 'vue'
+import { ref, onMounted } from 'vue'
 import FormTextElement from "@/components/FormTextElement.vue";
+import forgotPassword from "@/views/ForgotPassword.vue";
 
 const emit = defineEmits(['login'])
 
 const user = ref({
   pseudo: '',
   mot_de_passe: '',
-  se_souvenir_de_moi: false,
 })
 
 const errors = ref()
@@ -60,11 +33,49 @@ async function login() {
   }
 }
 
-function forgotPassword() {
-  // Rediriger l'utilisateur vers la page de réinitialisation du mot de passe
-  router.push('/forgot-password');
-}
+onMounted(() => {
+  const rememberedUser = localStorage.getItem('userInfo');
+  if (rememberedUser) {
+    user.value = JSON.parse(rememberedUser);
+  }
+})
+
+window.addEventListener('beforeunload', () => {
+  if (!user.value.se_souvenir_de_moi) {
+    localStorage.removeItem('userInfo');
+  }
+});
 </script>
+
+<template>
+  <main>
+    <h1>Login</h1>
+    <ul class="error" v-if="errors">
+      <li class="error">{{errors}}</li>
+    </ul>
+    <form>
+      <div class="form-element">
+        <label>Pseudo</label>
+        <input type="text" v-model="user.pseudo">
+      </div>
+      <div class="form-element">
+        <label>Mot de passe</label>
+        <input type="password" v-model="user.mot_de_passe">
+      </div>
+      <div class="form-element">
+        <label>
+          <input type="checkbox" v-model="user.se_souvenir_de_moi">
+          Se souvenir de moi
+        </label>
+      </div>
+      <router-link to="/forgot-password" class="router-link-button">Mot de passe oublié ?</router-link>
+
+
+      <button type="button" @click="login">Valider</button>
+    </form>
+  </main>
+</template>
+
 <style scoped>
 /* Style général */
 main {
@@ -134,6 +145,23 @@ button:last-child {
 
 button:hover {
   background-color: #0056b3;
+}
+.router-link-button {
+  display: inline-block;
+  width: calc(100% - 24px); /* Ajustement pour le padding */
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  background-color: #004981;
+  color: #ffffff;
+  font-size: 16px;
+  cursor: pointer;
+  text-decoration: none; /* Supprime le soulignement */
+  transition: background-color 0.3s;
+}
+
+.router-link-button:hover {
+  background-color: #00335b; /* Changement de couleur au survol */
 }
 
 
