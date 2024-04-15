@@ -1,8 +1,9 @@
 <template>
   <header>
-    <img src="../components/img/logoEni.jpg" alt="Logo" class="logo">
-    <nav>
-      <router-link to="./">
+    <a href="/">
+      <img src="../components/img/logoEni.jpg" alt="Logo" class="logo">
+    </a>    <nav>
+      <router-link to="/">
         <h1 class="title">ENI-Encheres</h1>
       </router-link>
     </nav>

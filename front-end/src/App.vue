@@ -32,4 +32,13 @@
 import Navbar from '@/views/Navbar.vue';
 </script>
 
+<script>
+export default {
+  name: 'App',
+  computed: {
+    isHomePage() {
+      return this.$route.path === '/';
+    }}}
+</script>
+
 <style lang="css" src="./assets/main.css"></style>
