@@ -31,6 +31,8 @@ public class ArticleVenduController {
 
     @PostMapping
     public ArticleVendu saveArticle(@RequestBody ArticleVendu article) {
+        System.out.println("--LOG-- exec ArticleVendu saveArticle()");
+        System.out.println("--LOG-- article: " + article);
         return articleVenduService.saveArticle(article);
     }
 

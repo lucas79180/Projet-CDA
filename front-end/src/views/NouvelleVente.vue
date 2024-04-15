@@ -38,7 +38,7 @@
           <FormTextElement label="Retrait - Rue" type="text" :object="article.retrait" field="rue" required/>
         </div>
         <div class="form-group">
-          <FormTextElement label="Retrait - Code Postal" type="text" :object="article.retrait" field="codePostal" required/>
+          <FormTextElement label="Retrait - Code Postal" type="text" :object="article.retrait" field="code_postal" required/>
         </div>
         <div class="form-group">
           <FormTextElement label="Retrait - Ville" type="text" :object="article.retrait" field="ville" required/>
@@ -58,6 +58,17 @@ import FormTextElement from "@/components/FormTextElement.vue";
 import axios from "../axios/instance";
 import { onMounted, ref } from "vue";
 
+onMounted(async () => {
+  try {
+    const result = await axios.get('/login')
+    userInfo.value = result.data // Assigner les données récupérées à userInfo
+    console.log("--LOG-- result.data = ")
+    console.log(userInfo.value)
+  } catch (error) {
+    console.error('Erreur lors de la récupération des données utilisateur:', error)
+  }
+})
+
 export default {
   components: {
     FormTextElement
@@ -68,17 +79,38 @@ export default {
       description: '',
       //categorie: null,
       miseAPrix: 0,
+      prixVente : 25012003,
       dateDebutEncheres: '',
       dateFinEncheres: '',
       retrait: {
         rue: '',
-        codePostal: '',
+        code_postal: '',
         ville: ''
       }
+
     });
+
+    // Définir la date du jour
+    const today = new Date().toISOString().slice(0, 16);
+
+    // Définir la date dans 30 jours
+    const thirtyDaysLater = new Date();
+    thirtyDaysLater.setDate(thirtyDaysLater.getDate() + 30);
+    const dateThirtyDaysLater = thirtyDaysLater.toISOString().slice(0, 16);
+
+    // Attribuer les valeurs aux champs date appropriés
+    article.value.dateDebutEncheres = today;
+    article.value.dateFinEncheres = dateThirtyDaysLater;
+
+    // EN MODE TEST [DEBUT]
+    article.value.nomArticle = "test du nom de l'article";
+    article.value.description = "test de la description  de l'article";
+    article.value.miseAPrix = 150;
+    //EN MODE TEST [FIN]
 
     const categories = ref([]);
     const listeErreurs = ref([]);
+    const userInfo = ref([]);
 
     async function recupererCategories() {
       try {
@@ -94,19 +126,38 @@ export default {
       }
     }
 
+    async function getUser(){
+      try {
+        const result = await axios.get('/login')
+        userInfo.value = result.data // Assigner les données récupérées à userInfo
+        console.log("--LOG-- result.data = ")
+        console.log(userInfo.value)
+        article.value.retrait.rue = userInfo.value.rue
+        article.value.retrait.code_postal = userInfo.value.code_postal
+        article.value.retrait.ville = userInfo.value.ville
+      } catch (error) {
+        console.error('Erreur lors de la récupération des données utilisateur:', error)
+      }
+    }
+
     onMounted(() => {
       recupererCategories();
+      getUser();
     });
 
 
-
+    // Bouton "enregistrer"
     async function submitForm() {
       console.log("--LOG-- submitForm");
       console.log("--LOG-- article.value : ");
       console.log(article.value);
       try {
-        console.log("--LOG-- >try");
         // Envoi dans le back des datas via axios
+        article.value.vendeur = userInfo.value;
+        console.log("--LOG-- userInfo.value :");
+        console.log(userInfo.value);
+        console.log("--LOG-- article.vendeur :");
+        console.log(article.vendeur);
         await axios.post(`articles`, article.value)
 
         // si jamais on n'a pas d'erreur
@@ -122,13 +173,11 @@ export default {
         article.dateFinEncheres = ''
         article.retrait = {
           rue: '',
-          codePostal: '',
+          code_postal: '',
           ville: ''
         }
 
-
       } catch (erreur) {
-        console.log("--LOG-- >catch");
         console.error("Erreur lors de l'envoi du formulaire:", erreur);
         listeErreurs.value.push("Erreur lors de l'envoi du formulaire.");
       }

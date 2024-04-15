@@ -13,6 +13,7 @@ public class Retrait {
 
     // Attributs
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "no_retrait")
     private Integer noRetrait;
     private String rue;

@@ -2,6 +2,8 @@ package org.enchere.backend.api;
 
 import org.enchere.backend.model.ArticleVendu;
 import org.enchere.backend.service.ArticleVenduService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,12 +13,15 @@ import java.util.List;
 @RequestMapping("/api/articles")
 public class ArticleVenduRestController {
 
+    private static final Logger log = LoggerFactory.getLogger(ArticleVenduRestController.class);
     private final ArticleVenduService articleVenduService;
+
 
     @Autowired
     public ArticleVenduRestController(ArticleVenduService articleVenduService) {
         this.articleVenduService = articleVenduService;
     }
+
 
     // Endpoint pour récupérer tous les articles
     @GetMapping
@@ -34,10 +39,15 @@ public class ArticleVenduRestController {
     // Endpoint pour créer un nouvel article
     @PostMapping
     public void createArticle(@RequestBody ArticleVendu article) {
+
         System.out.println("--LOG-- exec createArticle()");
-        System.out.println("ArticleVendu article : ");
-        System.out.println(article);
+        System.out.println("--LOG-- article: ");
+
+        System.out.println(article.getRetrait());
+
         articleVenduService.saveArticle(article);
+
+
     }
 
     // Endpoint pour supprimer un article par son ID

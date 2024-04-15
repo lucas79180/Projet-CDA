@@ -1,7 +1,7 @@
 package org.enchere.backend.controller;
 
 import org.enchere.backend.model.Retrait;
-import org.enchere.backend.service.RetraitService;
+import org.enchere.backend.service.ArticleVenduService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/retrait")
 public class RetraitController {
 
-    private final RetraitService retraitService;
+    private final ArticleVenduService retraitService;
 
     @Autowired
-    public RetraitController(RetraitService retraitService) {
+    public RetraitController(ArticleVenduService retraitService) {
         this.retraitService = retraitService;
     }
 
