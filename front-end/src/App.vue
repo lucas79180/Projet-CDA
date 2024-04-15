@@ -1,47 +1,44 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+  <div class="app">
+    <Navbar />
+    <div class="content">
+      <router-view></router-view>
+      <div v-if="isHomePage" class="filters">
+        <p>Filtres :</p>
+      </div>
+      <div v-if="isHomePage" class="search-container">
+        <input type="text" placeholder="Recherche...">
+      </div>
+      <div v-if="isHomePage" class="filters">
+        <p>Catégories :</p>
+      </div>
+      <div v-if="isHomePage" class="select-container">
+        <select>
+          <option value="">Choisissez une catégorie</option>
+          <option value="informatiques">Informatiques</option>
+          <option value="ameublement">Ameublement</option>
+          <option value="vêtements">Vêtements</option>
+          <option value="sports-loisirs">Sports & Loisirs</option>
+        </select>
+      </div>
     </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+    <footer>
+      <!-- Votre contenu de pied de page ici -->
+    </footer>
+  </div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-}
+<script setup>
+import Navbar from '@/views/Navbar.vue';
+</script>
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
+<script>
+export default {
+  name: 'App',
+  computed: {
+    isHomePage() {
+      return this.$route.path === '/';
+    }}}
+</script>
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>
+<style lang="css" src="./assets/main.css"></style>
