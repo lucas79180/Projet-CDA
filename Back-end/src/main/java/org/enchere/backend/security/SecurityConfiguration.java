@@ -77,6 +77,10 @@ public class SecurityConfiguration {
          ******************************************************************/
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
+        http.sessionManagement(session -> session
+                .maximumSessions(1) // Nombre maximum de sessions par utilisateur
+                .expiredUrl("/logout")); // URL vers laquelle rediriger après expiration de la session
+
         return http.build();
     }
 
