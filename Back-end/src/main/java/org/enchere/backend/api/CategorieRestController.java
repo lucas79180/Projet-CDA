@@ -17,7 +17,7 @@ public class CategorieRestController {
 
     @GetMapping
     public List<Categorie> getAllCategories() {
-        System.out.println("\n --LOG-- Execution de getAllCategories");
+        System.out.println("--LOG-- Execution de getAllCategories");
         System.out.println("\n --LOG-- Valeur : " + categorieService.getAllCategories());
         return categorieService.getAllCategories();
     }

@@ -34,6 +34,9 @@ public class ArticleVenduRestController {
     // Endpoint pour créer un nouvel article
     @PostMapping
     public void createArticle(@RequestBody ArticleVendu article) {
+        System.out.println("--LOG-- exec createArticle()");
+        System.out.println("ArticleVendu article : ");
+        System.out.println(article);
         articleVenduService.saveArticle(article);
     }
 

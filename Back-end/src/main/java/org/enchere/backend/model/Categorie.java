@@ -18,8 +18,8 @@ public class Categorie {
     private Integer noCategorie;
     private String libelle;
 
-    @OneToMany(mappedBy = "categorie")
-    private List<ArticleVendu> ArticleVendu;
+   // @OneToMany(mappedBy = "categorie")
+    //private List<ArticleVendu> ArticleVendu;
 
     public Categorie(Integer noCategorie, String libelle) {
         this.noCategorie = noCategorie;
