@@ -116,10 +116,9 @@ export default {
       try {
         console.log("--LOG-- recupererCategories");
         const reponseHTTP = await axios.get('/categories');
-
         categories.value = reponseHTTP.data;
-
-        console.log("--LOG-- categories : ", categories);
+        console.log("--LOG-- reponseHTTP.data : " + reponseHTTP.data);
+        console.log("--LOG-- categories : " + categories);
       } catch (erreur) {
         console.error("Erreur lors de la récupération des catégories:", erreur);
         listeErreurs.value.push("Erreur lors de la récupération des catégories.");
@@ -148,9 +147,6 @@ export default {
 
     // Bouton "enregistrer"
     async function submitForm() {
-      console.log("--LOG-- submitForm");
-      console.log("--LOG-- article.value : ");
-      console.log(article.value);
       try {
         // Envoi dans le back des datas via axios
         article.value.vendeur = userInfo.value;
@@ -178,6 +174,7 @@ export default {
         }
 
       } catch (erreur) {
+        console.log("--LOG-- >catch");
         console.error("Erreur lors de l'envoi du formulaire:", erreur);
         listeErreurs.value.push("Erreur lors de l'envoi du formulaire.");
       }
