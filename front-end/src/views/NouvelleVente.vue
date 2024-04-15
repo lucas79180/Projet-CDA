@@ -14,7 +14,13 @@
           <label for="categorie">Catégorie:</label>
           <select id="categorie" v-model="article['categorie']" required v-if="categories.length > 0">
             <option value="" disabled>Sélectionnez une catégorie</option>
-            <option v-for="categorie in categories" :key="categorie.noCategorie" :value="categorie.noCategorie">{{ categorie.libelle }}</option>
+           <!-- <option v-for="categorie in categories" :key="categorie.noCategorie" :value="categorie.noCategorie">{{ categorie.libelle }}</option> -->
+            <option v-for="categorie in categories" :key="categorie.noCategorie" :value="{ 'noCategorie': categorie.noCategorie, 'libelle': categorie.libelle }">
+              {{ categorie.libelle }}
+            </option>
+
+
+
           </select>
           <span v-else>Loading categories...</span>
         </div>
@@ -60,7 +66,7 @@ export default {
     const article = ref({
       nomArticle: '',
       description: '',
-      categorie: null,
+      //categorie: null,
       miseAPrix: 0,
       dateDebutEncheres: '',
       dateFinEncheres: '',
@@ -91,6 +97,8 @@ export default {
     onMounted(() => {
       recupererCategories();
     });
+
+
 
     async function submitForm() {
       console.log("--LOG-- submitForm");
