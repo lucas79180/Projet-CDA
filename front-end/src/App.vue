@@ -1,28 +1,6 @@
 <template>
   <div class="app">
-    <header>
-      <a href="./">
-        <img src="./components/img/logoEni.jpg" alt="Logo" class="logo">
-      </a>
-      <nav>
-      <router-link  to="./" > <h1 class="title">ENI-Encheres</h1> </router-link>
-      </nav>
-      <section  v-if="user.id">
-        <nav>
-          <router-link to="/nouvelle-vente">Nouvelle Vente</router-link>
-          <router-link to="/monprofil"> Mon profil</router-link>
-          <router-link to="/utilisateurs"> Utilisateurs </router-link>
-          <button type="button" @click="logout"> Déconnecter</button>
-        </nav>
-      </section>
-      <section v-else>
-      <nav>
-        <router-link to="/connexion">Connexion</router-link>
-        <router-link to="/inscription">Inscription</router-link>
-
-      </nav>
-      </section>
-    </header>
+    <Navbar />
     <div class="content">
       <router-view></router-view>
       <div v-if="isHomePage" class="filters">
@@ -34,7 +12,6 @@
       <div v-if="isHomePage" class="filters">
         <p>Catégories :</p>
       </div>
-
       <div v-if="isHomePage" class="select-container">
         <select>
           <option value="">Choisissez une catégorie</option>
@@ -50,38 +27,11 @@
     </footer>
   </div>
 </template>
+
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import { onMounted, ref, provide } from 'vue'
-import axios from '@/axios/instance'
-import router from "@/router.js";
-
-
-
-
-const user = ref({})
-provide('userConnect', user)
-
-function logout(){
-  localStorage.removeItem('jwt')
-  user.value = {}
-  router.push('/')
-}
-
-async function init(){
-  try {
-    const result = await axios.get('/login')
-    // si tout se passe bien,
-    user.value = result.data
-  } catch (error) {
-    console.log('erreur lors de la récupération du user', error);
-  }
-}
-
-onMounted(() => {
-  init()
-})
+import Navbar from '@/views/Navbar.vue';
 </script>
+
 <script>
 export default {
   name: 'App',
@@ -90,4 +40,5 @@ export default {
       return this.$route.path === '/';
     }}}
 </script>
+
 <style lang="css" src="./assets/main.css"></style>
