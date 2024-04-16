@@ -16,7 +16,7 @@
 
 <script setup>
 import Navbar from '@/views/Navbar.vue';
-import TablesEncheres from "@/views/TablesEncheres.vue";
+import TablesEncheres from "@/views/TablesArticles.vue";
 </script>
 
 <script>
