@@ -1,6 +1,6 @@
 // src/router.js
 import { createRouter, createWebHistory } from 'vue-router';
-import NouvelleVente from './views/NouvelleVente.vue';
+import NouveauArticle from './views/NouveauArticle.vue';
 import UpdateUser from "@/views/UpdateUser.vue";
 import InfoUser from "@/views/infoUser.vue";
 import User from "./views/User.vue";
@@ -12,9 +12,9 @@ import Navbar from "@/views/Navbar.vue";
 
 const routes = [
     {
-        path: '/nouvelle-vente',
-        name: 'NouvelleVente',
-        component: NouvelleVente
+        path: '/nouveau-article',
+        name: 'NouveauArticle',
+        component: NouveauArticle
     },
     {
         path: '/inscription',
@@ -32,7 +32,7 @@ const routes = [
         component: UpdateUser
     },
     {
-        path: '/monprofil',
+        path: '/mon-profil',
         name: 'infoUser',
         component: InfoUser
     },

@@ -1,5 +1,6 @@
 package org.enchere.backend.service;
 
+import jakarta.transaction.Transactional;
 import org.enchere.backend.Repository.RetraitRepository;
 import org.enchere.backend.model.Retrait;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Transactional
 @Service
 public class RetraitServiceImpl implements RetraitService {
 

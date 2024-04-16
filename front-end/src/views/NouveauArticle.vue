@@ -1,47 +1,45 @@
 <template>
-  <div class="nouvelle-vente">
+  <div class="nouveau-article">
     <div class="form-container">
-      <h2 class="form-title">Nouvelle vente</h2>
+      <h2 class="form-title">Nouveau article</h2>
       <form class="form" @submit.prevent="submitForm">
         <div class="form-group">
-          <FormTextElement label="Nom de l'article" type="text" :object="article" field="nomArticle"/>
+          <FormTextElement label="Nom de l'article" type="text" :object="articleRetrait.article" field="nomArticle"/>
         </div>
         <div class="form-group">
           <label for="description">Description :</label>
-          <textarea id="description" v-model="article['description']" rows="4" required></textarea>
+          <textarea id="description" v-model="articleRetrait.article['description']" rows="4" required></textarea>
         </div>
         <div class="form-group">
           <label for="categorie">Catégorie:</label>
-          <select id="categorie" v-model="article['categorie']" required v-if="categories.length > 0">
+          <select id="categorie" v-model="articleRetrait.article['categorie']" required v-if="categories.length > 0">
             <option value="" disabled>Sélectionnez une catégorie</option>
            <!-- <option v-for="categorie in categories" :key="categorie.noCategorie" :value="categorie.noCategorie">{{ categorie.libelle }}</option> -->
             <option v-for="categorie in categories" :key="categorie.noCategorie" :value="{ 'noCategorie': categorie.noCategorie, 'libelle': categorie.libelle }">
               {{ categorie.libelle }}
             </option>
 
-
-
           </select>
           <span v-else>Loading categories...</span>
         </div>
 
         <div class="form-group">
-          <FormTextElement label="Mise à prix" type="number" :object="article" field="miseAPrix" required/>
+          <FormTextElement label="Mise à prix" type="number" :object="articleRetrait.article" field="miseAPrix" required/>
         </div>
         <div class="form-group">
-          <FormTextElement label="Début de l'enchère" type="datetime-local" :object="article" field="dateDebutEncheres" required/>
+          <FormTextElement label="Début de l'enchère" type="datetime-local" :object="articleRetrait.article" field="dateDebutEncheres" required/>
         </div>
         <div class="form-group">
-          <FormTextElement label="Fin de l'enchère" type="datetime-local" :object="article" field="dateFinEncheres" required/>
+          <FormTextElement label="Fin de l'enchère" type="datetime-local" :object="articleRetrait.article" field="dateFinEncheres" required/>
         </div>
         <div class="form-group">
-          <FormTextElement label="Retrait - Rue" type="text" :object="article.retrait" field="rue" required/>
+          <FormTextElement label="Retrait - Rue" type="text" :object="articleRetrait.retrait" field="rue" required/>
         </div>
         <div class="form-group">
-          <FormTextElement label="Retrait - Code Postal" type="text" :object="article.retrait" field="code_postal" required/>
+          <FormTextElement label="Retrait - Code Postal" type="text" :object="articleRetrait.retrait" field="code_postal" required/>
         </div>
         <div class="form-group">
-          <FormTextElement label="Retrait - Ville" type="text" :object="article.retrait" field="ville" required/>
+          <FormTextElement label="Retrait - Ville" type="text" :object="articleRetrait.retrait" field="ville" required/>
         </div>
         <!-- Actions du formulaire -->
         <div class="form-actions">
@@ -74,14 +72,16 @@ export default {
     FormTextElement
   },
   setup() {
-    const article = ref({
-      nomArticle: '',
-      description: '',
-      //categorie: null,
-      miseAPrix: 0,
-      prixVente : 25012003,
-      dateDebutEncheres: '',
-      dateFinEncheres: '',
+    const articleRetrait = ref({
+      article : {
+        nomArticle: '',
+        description: '',
+        //categorie: null,
+        miseAPrix: 0,
+        prixVente : 25012003,
+        dateDebutEncheres: '',
+        dateFinEncheres: ''
+      },
       retrait: {
         rue: '',
         code_postal: '',
@@ -99,13 +99,13 @@ export default {
     const dateThirtyDaysLater = thirtyDaysLater.toISOString().slice(0, 16);
 
     // Attribuer les valeurs aux champs date appropriés
-    article.value.dateDebutEncheres = today;
-    article.value.dateFinEncheres = dateThirtyDaysLater;
+    articleRetrait.value.article.dateDebutEncheres = today;
+    articleRetrait.value.article.dateFinEncheres = dateThirtyDaysLater;
 
     // EN MODE TEST [DEBUT]
-    article.value.nomArticle = "test du nom de l'article";
-    article.value.description = "test de la description  de l'article";
-    article.value.miseAPrix = 150;
+    //article.value.nomArticle = "test du nom de l'article";
+    //article.value.description = "test de la description  de l'article";
+    //article.value.miseAPrix = 150;
     //EN MODE TEST [FIN]
 
     const categories = ref([]);
@@ -131,9 +131,9 @@ export default {
         userInfo.value = result.data // Assigner les données récupérées à userInfo
         console.log("--LOG-- result.data = ")
         console.log(userInfo.value)
-        article.value.retrait.rue = userInfo.value.rue
-        article.value.retrait.code_postal = userInfo.value.code_postal
-        article.value.retrait.ville = userInfo.value.ville
+        articleRetrait.value.retrait.rue = userInfo.value.rue
+        articleRetrait.value.retrait.code_postal = userInfo.value.code_postal
+        articleRetrait.value.retrait.ville = userInfo.value.ville
       } catch (error) {
         console.error('Erreur lors de la récupération des données utilisateur:', error)
       }
@@ -147,31 +147,32 @@ export default {
 
     // Bouton "enregistrer"
     async function submitForm() {
+      console.log("--LOG-- exec submitForm")
       try {
         // Envoi dans le back des datas via axios
-        article.value.vendeur = userInfo.value;
+        articleRetrait.value.article.vendeur = userInfo.value;
         console.log("--LOG-- userInfo.value :");
         console.log(userInfo.value);
-        console.log("--LOG-- article.vendeur :");
-        console.log(article.vendeur);
-        await axios.post(`articles`, article.value)
+        console.log("--LOG-- articleRetrait.value.article.vendeur :");
+        console.log(articleRetrait.value.article.vendeur);
+        await axios.post(`articles`, articleRetrait.value)
 
         // si jamais on n'a pas d'erreur
         // on vide la variable listeErreurs
         listeErreurs.value = []
 
         // après enregistrement, réinistalisation du forms :
-        article.nomArticle = ''
-        article.description = ''
-        article.categorie = null
-        article.miseAPrix = 0
-        article.dateDebutEncheres = ''
-        article.dateFinEncheres = ''
-        article.retrait = {
-          rue: '',
-          code_postal: '',
-          ville: ''
-        }
+        articleRetrait.value.article.nomArticle = ''
+        articleRetrait.value.article.description = ''
+        articleRetrait.value.article.categorie = null
+        articleRetrait.value.article.miseAPrix = 0
+        articleRetrait.value.article.dateDebutEncheres = ''
+        articleRetrait.value.article.dateFinEncheres = ''
+
+        articleRetrait.value.retrait.rue = ''
+        articleRetrait.value.retrait.code_postal = ''
+        articleRetrait.value.retrait.ville = ''
+
 
       } catch (erreur) {
         console.log("--LOG-- >catch");
@@ -185,7 +186,7 @@ export default {
     }
 
     return {
-      article,
+      articleRetrait,
       categories,
       listeErreurs,
       submitForm,

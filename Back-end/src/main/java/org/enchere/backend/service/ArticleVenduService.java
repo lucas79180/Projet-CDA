@@ -1,5 +1,6 @@
 package org.enchere.backend.service;
 
+import org.enchere.backend.model.ArticleRetrait;
 import org.enchere.backend.model.ArticleVendu;
 import org.enchere.backend.model.Retrait;
 
@@ -9,7 +10,7 @@ public interface ArticleVenduService {
 
     List<ArticleVendu> getAllArticles();
     ArticleVendu getArticleById(Integer id);
-    ArticleVendu saveArticle(ArticleVendu article);
+    ArticleVendu saveArticle(ArticleRetrait article);
     void deleteArticle(Integer id);
 
     List<Retrait> getAllRetrait();

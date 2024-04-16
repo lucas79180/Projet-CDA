@@ -1,5 +1,6 @@
 package org.enchere.backend.service;
 
+import jakarta.transaction.Transactional;
 import org.enchere.backend.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+@Transactional
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -57,6 +59,29 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
+    /**
+     * @param userProvenance : Utilisateur envoyant le montant
+     * @param userDestination : Utilisateur recevant le motant
+     * @param montant : Montant de la transction
+     * Le motant de l'utilisateur userProvenance doit être supérieur ou égale au motant indiqué
+     */
+    @Override
+    public boolean transfertMontant(User userProvenance, User userDestination, Integer montant) {
+        System.out.println("--LOG-- exec transfertMontant");
+        if (userProvenance.getCredit() >= montant){
+            userProvenance.setCredit(userProvenance.getCredit() - montant);
+            userRepository.save(userProvenance);
+
+            userDestination.setCredit(userDestination.getCredit() + montant);
+            userRepository.save(userDestination);
+            System.out.println("--LOG-- Transaction réussie");
+            return true;
+        } else  {
+            System.out.println("--LOG-- Créfit insuffisant");
+            return false;
+        }
+    }
+
     @Override
     public void supprimerUserParId(long id) {
         userRepository.deleteById(id);
@@ -83,4 +108,6 @@ public class UserServiceImpl implements UserService {
 
         return utilisateurExistant;
     }
+
+
 }

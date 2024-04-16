@@ -2,6 +2,7 @@ package org.enchere.backend.service;
 
 import org.enchere.backend.Repository.ArticleVenduRepository;
 import org.enchere.backend.Repository.RetraitRepository;
+import org.enchere.backend.model.ArticleRetrait;
 import org.enchere.backend.model.ArticleVendu;
 import org.enchere.backend.model.Retrait;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,16 +37,30 @@ public class ArticleVenduServiceImpl implements ArticleVenduService {
     }
 
     @Override
-    public ArticleVendu saveArticle(ArticleVendu article) {
+    public ArticleVendu saveArticle(ArticleRetrait newArticle) {
 
         // gestion de la double dépendance
-        article.getRetrait().setArticleVendu(article);
+
+
+
+        //newArticle.getRetrait().setArticleVendu(newArticle);
 
         // Sauvegarde en bdd
-        articleVenduRepository.save(article);
-        retraitRepository.save(article.getRetrait());
+        System.out.println("--LOG-- newArticle : " + newArticle);
+        System.out.println("--LOG-- getRetrait : " + newArticle.getRetrait());
+        System.out.println("--LOG-- getArticle :" + newArticle.getArticle());
 
-        return articleVenduRepository.save(article);
+        newArticle.setArticle(articleVenduRepository.save(newArticle.getArticle()));
+
+        newArticle.getRetrait().setArticleVendu(newArticle.getArticle());
+
+        System.out.println("--LOG-- **SAVE ARTICLE**");
+        System.out.println("--LOG-- newArticle : " + newArticle);
+        System.out.println("--LOG-- getRetrait : " + newArticle.getRetrait());
+        System.out.println("--LOG-- getArticle :" + newArticle.getArticle());
+        retraitRepository.save(newArticle.getRetrait());
+
+        return newArticle.getArticle();
     }
 
     @Override

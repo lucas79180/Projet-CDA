@@ -1,6 +1,7 @@
 package org.enchere.backend.controller;
 
 import org.enchere.backend.Repository.ArticleVenduRepository;
+import org.enchere.backend.model.ArticleRetrait;
 import org.enchere.backend.model.ArticleVendu;
 import org.enchere.backend.service.ArticleVenduService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class ArticleVenduController {
     }
 
     @PostMapping
-    public ArticleVendu saveArticle(@RequestBody ArticleVendu article) {
+    public ArticleVendu saveArticle(@RequestBody ArticleRetrait article) {
         System.out.println("--LOG-- exec ArticleVendu saveArticle()");
         System.out.println("--LOG-- article: " + article);
         return articleVenduService.saveArticle(article);
