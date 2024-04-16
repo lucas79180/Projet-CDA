@@ -11,10 +11,14 @@
       <nav>
         <router-link to="/nouvelle-vente">Nouvelle Vente</router-link>
         <router-link to="/monprofil"> Mon profil</router-link>
-        <router-link to="/utilisateurs"> Utilisateurs </router-link>
+
+          <router-link  v-if="user.administrateur" to="/utilisateurs"> Utilisateurs </router-link>
+
         <button type="button" @click="logout"> Déconnecter</button>
       </nav>
+
     </section>
+
     <section v-else>
       <nav>
         <router-link to="/connexion">Connexion</router-link>

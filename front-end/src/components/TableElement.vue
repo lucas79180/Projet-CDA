@@ -40,8 +40,8 @@
       <label for="email">Email : </label>
       <input type="email" id="email" v-model="editingUser.email" required>
 
-      <label for="tel">Téléphone :</label>
-      <input type="tel" id="tel" v-model="editingUser.telephone" required>
+      <label for="telephone">Téléphone :</label>
+      <input type="text" id="telephone" v-model="editingUser.telephone" required>
 
       <label for="rue">Rue :</label>
       <input type="text" id="rue" v-model="editingUser.rue" required>
@@ -51,6 +51,9 @@
 
       <label for="Ville">Ville :</label>
       <input type="text" id="Ville" v-model="editingUser.ville" required>
+
+      <label for="administrateur">Administrateur :</label>
+      <input type="checkbox" id="administrateur" v-model="editingUser.administrateur">
 
       <button type="submit">Enregistrer</button>
       <button @click="cancelEdit">Annuler</button>
@@ -94,12 +97,15 @@ const cancelDelete = () => {
 
 const editElement = (element) => {
   userEdit.value = true;
+
   editingUser.value = { ...element }; // Affecter l'utilisateur en cours d'édition
 }
 
 const editUser = () => {
   emit('edit', editingUser.value); // Émettre l'événement d'édition avec l'utilisateur modifié
+  console.log(editingUser.value)
   userEdit.value = false;
+
 }
 
 const cancelEdit = () => {
