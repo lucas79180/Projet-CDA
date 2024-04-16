@@ -207,7 +207,8 @@ form label {
 
 form input[type="text"],
 form input[type="email"],
-form input[type="tel"] {
+form input[type="tel"],
+form input[type="checkbox"]{
   width: calc(50% - 12px); /* Raccourcir les champs de saisie */
   padding: 8px;
   border: 1px solid #cccccc;
