@@ -99,6 +99,8 @@ public class UserController {
         utilisateurExistant.setCode_postal(utilisateurModifie.getCode_postal());
         utilisateurExistant.setVille(utilisateurModifie.getVille());
         utilisateurExistant.setRue(utilisateurModifie.getRue());
+        utilisateurExistant.setTelephone(utilisateurModifie.getTelephone());
+        utilisateurExistant.setAdministrateur(utilisateurModifie.isAdministrateur());
 
         // Enregistrez les modifications dans la base de données via le service
         return userService.modifierUser(utilisateurExistant);
