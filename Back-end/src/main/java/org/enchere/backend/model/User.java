@@ -30,6 +30,7 @@ public class User {
     private int credit = 0;
     private boolean administrateur = false;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "utilisateur")
     private List<Enchere> encheres;
 

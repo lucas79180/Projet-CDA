@@ -19,4 +19,6 @@ public interface UserService {
     User modifierUser(User user);
 
     User recupererUser(String pseudo);
+
+    boolean transfertMontant(User userProvenance, User userDestination, Integer montant);
 }

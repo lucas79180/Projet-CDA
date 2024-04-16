@@ -9,10 +9,10 @@
     </nav>
     <section v-if="user.id">
       <nav>
-        <router-link to="/nouvelle-vente">Nouvelle Vente</router-link>
-        <router-link to="/monprofil"> Mon profil</router-link>
+        <router-link to="/nouveau-article">Vendre un article</router-link>
+        <router-link to="/mon-profil"> Mon profil</router-link>
         <router-link to="/utilisateurs"> Utilisateurs </router-link>
-        <button type="button" @click="logout"> Déconnecter</button>
+        <button type="button" @click="logout"> Déconnexion</button>
       </nav>
     </section>
     <section v-else>
