@@ -1,62 +1,198 @@
 <template>
   <div class="nouvelle-vente">
-  <div class="form-container">
-    <h2 class="form-title">Nouvelle vente</h2>
-    <form class="form">
-      <div class="form-group">
-        <label for="article">Article:</label>
-        <input type="text" id="article" name="article" required>
-      </div>
-      <div class="form-group">
-        <label for="description">Description:</label>
-        <textarea id="description" name="description" rows="4" required></textarea>
-      </div>
-      <div class="form-group">
-        <label for="category">Catégorie:</label>
-        <input type="text" id="category" name="category" required>
-      </div>
-      <div class="form-group">
-        <label for="photo">Photo de l'article:</label>
-        <input type="file" id="photo" name="photo" accept="image/*">
-        <!-- Ajoutez ici un code pour afficher la photo -->
-      </div>
-      <div class="form-group">
-        <label for="price">Mise à prix:</label>
-        <input type="number" id="price" name="price" required>
-      </div>
-      <div class="form-group">
-        <label for="start-date">Début de l'enchère:</label>
-        <input type="datetime-local" id="start-date" name="start-date" required>
-      </div>
-      <div class="form-group">
-        <label for="end-date">Fin de l'enchère:</label>
-        <input type="datetime-local" id="end-date" name="end-date" required>
-      </div>
-      <div class="form-group">
-        <label for="address">Retrait:</label>
-        <div class="address">
-          <input type="text" id="street" name="street" placeholder="Rue" required>
-          <input type="text" id="postal-code" name="postal-code" placeholder="Code postal" required>
-          <input type="text" id="city" name="city" placeholder="Ville" required>
+    <div class="form-container">
+      <h2 class="form-title">Nouvelle vente</h2>
+      <form class="form" @submit.prevent="submitForm">
+        <div class="form-group">
+          <FormTextElement label="Nom de l'article" type="text" :object="article" field="nomArticle"/>
         </div>
-      </div>
-      <div class="form-actions">
-        <button type="submit">Enregistrer</button>
-        <button type="button" @click="cancel">Annuler</button>
-      </div>
-    </form>
-  </div>
+        <div class="form-group">
+          <label for="description">Description :</label>
+          <textarea id="description" v-model="article['description']" rows="4" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="categorie">Catégorie:</label>
+          <select id="categorie" v-model="article['categorie']" required v-if="categories.length > 0">
+            <option value="" disabled>Sélectionnez une catégorie</option>
+           <!-- <option v-for="categorie in categories" :key="categorie.noCategorie" :value="categorie.noCategorie">{{ categorie.libelle }}</option> -->
+            <option v-for="categorie in categories" :key="categorie.noCategorie" :value="{ 'noCategorie': categorie.noCategorie, 'libelle': categorie.libelle }">
+              {{ categorie.libelle }}
+            </option>
+
+
+
+          </select>
+          <span v-else>Loading categories...</span>
+        </div>
+
+        <div class="form-group">
+          <FormTextElement label="Mise à prix" type="number" :object="article" field="miseAPrix" required/>
+        </div>
+        <div class="form-group">
+          <FormTextElement label="Début de l'enchère" type="datetime-local" :object="article" field="dateDebutEncheres" required/>
+        </div>
+        <div class="form-group">
+          <FormTextElement label="Fin de l'enchère" type="datetime-local" :object="article" field="dateFinEncheres" required/>
+        </div>
+        <div class="form-group">
+          <FormTextElement label="Retrait - Rue" type="text" :object="article.retrait" field="rue" required/>
+        </div>
+        <div class="form-group">
+          <FormTextElement label="Retrait - Code Postal" type="text" :object="article.retrait" field="code_postal" required/>
+        </div>
+        <div class="form-group">
+          <FormTextElement label="Retrait - Ville" type="text" :object="article.retrait" field="ville" required/>
+        </div>
+        <!-- Actions du formulaire -->
+        <div class="form-actions">
+          <button type="submit">Enregistrer</button>
+          <button type="button" @click="cancel">Annuler</button>
+        </div>
+      </form>
+    </div>
   </div>
 </template>
 
 <script>
-export default {
-  methods: {
-    cancel() {
-      // Ajoutez ici le code pour annuler l'actio
-    }
+import FormTextElement from "@/components/FormTextElement.vue";
+import axios from "../axios/instance";
+import { onMounted, ref } from "vue";
+
+onMounted(async () => {
+  try {
+    const result = await axios.get('/login')
+    userInfo.value = result.data // Assigner les données récupérées à userInfo
+    console.log("--LOG-- result.data = ")
+    console.log(userInfo.value)
+  } catch (error) {
+    console.error('Erreur lors de la récupération des données utilisateur:', error)
   }
-}
+})
+
+export default {
+  components: {
+    FormTextElement
+  },
+  setup() {
+    const article = ref({
+      nomArticle: '',
+      description: '',
+      //categorie: null,
+      miseAPrix: 0,
+      prixVente : 25012003,
+      dateDebutEncheres: '',
+      dateFinEncheres: '',
+      retrait: {
+        rue: '',
+        code_postal: '',
+        ville: ''
+      }
+
+    });
+
+    // Définir la date du jour
+    const today = new Date().toISOString().slice(0, 16);
+
+    // Définir la date dans 30 jours
+    const thirtyDaysLater = new Date();
+    thirtyDaysLater.setDate(thirtyDaysLater.getDate() + 30);
+    const dateThirtyDaysLater = thirtyDaysLater.toISOString().slice(0, 16);
+
+    // Attribuer les valeurs aux champs date appropriés
+    article.value.dateDebutEncheres = today;
+    article.value.dateFinEncheres = dateThirtyDaysLater;
+
+    // EN MODE TEST [DEBUT]
+    article.value.nomArticle = "test du nom de l'article";
+    article.value.description = "test de la description  de l'article";
+    article.value.miseAPrix = 150;
+    //EN MODE TEST [FIN]
+
+    const categories = ref([]);
+    const listeErreurs = ref([]);
+    const userInfo = ref([]);
+
+    async function recupererCategories() {
+      try {
+        console.log("--LOG-- recupererCategories");
+        const reponseHTTP = await axios.get('/categories');
+        categories.value = reponseHTTP.data;
+        console.log("--LOG-- reponseHTTP.data : " + reponseHTTP.data);
+        console.log("--LOG-- categories : " + categories);
+      } catch (erreur) {
+        console.error("Erreur lors de la récupération des catégories:", erreur);
+        listeErreurs.value.push("Erreur lors de la récupération des catégories.");
+      }
+    }
+
+    async function getUser(){
+      try {
+        const result = await axios.get('/login')
+        userInfo.value = result.data // Assigner les données récupérées à userInfo
+        console.log("--LOG-- result.data = ")
+        console.log(userInfo.value)
+        article.value.retrait.rue = userInfo.value.rue
+        article.value.retrait.code_postal = userInfo.value.code_postal
+        article.value.retrait.ville = userInfo.value.ville
+      } catch (error) {
+        console.error('Erreur lors de la récupération des données utilisateur:', error)
+      }
+    }
+
+    onMounted(() => {
+      recupererCategories();
+      getUser();
+    });
+
+
+    // Bouton "enregistrer"
+    async function submitForm() {
+      try {
+        // Envoi dans le back des datas via axios
+        article.value.vendeur = userInfo.value;
+        console.log("--LOG-- userInfo.value :");
+        console.log(userInfo.value);
+        console.log("--LOG-- article.vendeur :");
+        console.log(article.vendeur);
+        await axios.post(`articles`, article.value)
+
+        // si jamais on n'a pas d'erreur
+        // on vide la variable listeErreurs
+        listeErreurs.value = []
+
+        // après enregistrement, réinistalisation du forms :
+        article.nomArticle = ''
+        article.description = ''
+        article.categorie = null
+        article.miseAPrix = 0
+        article.dateDebutEncheres = ''
+        article.dateFinEncheres = ''
+        article.retrait = {
+          rue: '',
+          code_postal: '',
+          ville: ''
+        }
+
+      } catch (erreur) {
+        console.log("--LOG-- >catch");
+        console.error("Erreur lors de l'envoi du formulaire:", erreur);
+        listeErreurs.value.push("Erreur lors de l'envoi du formulaire.");
+      }
+    }
+
+    function cancel() {
+      // Logique d'annulation du formulaire
+    }
+
+    return {
+      article,
+      categories,
+      listeErreurs,
+      submitForm,
+      cancel
+    };
+  }
+};
 </script>
 
 <style scoped>
