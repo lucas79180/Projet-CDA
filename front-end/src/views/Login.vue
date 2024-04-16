@@ -68,10 +68,11 @@ window.addEventListener('beforeunload', () => {
           Se souvenir de moi
         </label>
       </div>
-      <router-link to="/forgot-password" class="router-link-button">Mot de passe oublié ?</router-link>
-
 
       <button type="button" @click="login">Valider</button>
+      <br><br>
+      <router-link to="/forgot-password" class="router-link-button">Mot de passe oublié ?</router-link>
+
     </form>
   </main>
 </template>

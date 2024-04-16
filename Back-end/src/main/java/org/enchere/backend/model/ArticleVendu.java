@@ -1,5 +1,6 @@
 package org.enchere.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -36,8 +37,8 @@ public class ArticleVendu {
     @ManyToOne
     @JoinColumn(name = "no_categorie")
     private Categorie categorie;
-    @OneToOne(mappedBy = "articleVendu")
-    private Retrait retrait;
+
+    @JsonIgnore
     @OneToMany
     private List<Enchere> encheres;
 
@@ -59,7 +60,6 @@ public class ArticleVendu {
         this.prixVente = prixVente;
         //this.etatVente = etatVente;
         this.categorie = categorie;
-        this.retrait = retrait;
         this.encheres = encheres;
         this.vendeur = vendeur;
     }

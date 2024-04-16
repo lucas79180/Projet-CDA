@@ -21,6 +21,9 @@
           <option value="sports-loisirs">Sports & Loisirs</option>
         </select>
       </div>
+      <div v-if="isHomePage" class="filters">
+        <TablesEncheres />
+      </div>
     </div>
     <footer>
       <!-- Votre contenu de pied de page ici -->
@@ -30,6 +33,7 @@
 
 <script setup>
 import Navbar from '@/views/Navbar.vue';
+import TablesEncheres from "@/views/TablesEncheres.vue";
 </script>
 
 <script>
