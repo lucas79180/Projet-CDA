@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -46,14 +45,6 @@ public class ArticleVendu {
     @JoinColumn(name = "no_utilisateur", nullable = false)
     private User vendeur;
 
-    @ManyToOne
-    private Categorie categorie;
-
-    @OneToOne(mappedBy = "articleVendu")
-    private Retrait retrait;
-
-    @OneToMany
-    private List<Enchere> encheres;
 
     public ArticleVendu() {
     }

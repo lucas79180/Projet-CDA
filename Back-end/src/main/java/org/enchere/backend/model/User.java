@@ -1,5 +1,6 @@
 package org.enchere.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,6 +33,7 @@ public class User {
     @OneToMany(mappedBy = "utilisateur")
     private List<Enchere> encheres;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "vendeur", cascade = CascadeType.ALL)
     private List<ArticleVendu> articlesVendu;
 
@@ -80,7 +82,7 @@ public class User {
                 ", credit=" + credit +
                 ", administrateur=" + administrateur +
                 ", encheres=" + encheres +
-                ", articlesVendu=" + articlesVendu +
+
                 '}';
     }
 }
