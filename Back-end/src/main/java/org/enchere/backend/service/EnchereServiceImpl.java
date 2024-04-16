@@ -1,2 +1,20 @@
-package org.enchere.backend.service;public class EnchereServiceImpl {
+package org.enchere.backend.service;
+
+import org.enchere.backend.Repository.EnchereRepository;
+import org.enchere.backend.model.Enchere;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class EnchereServiceImpl implements EnchereService {
+
+    @Autowired
+    private EnchereRepository enchereRepository;
+
+    @Override
+    public List<Enchere> getAllEncheres() {
+        return enchereRepository.findAll();
+    }
 }
