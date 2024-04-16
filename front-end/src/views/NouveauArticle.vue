@@ -78,7 +78,7 @@ export default {
         description: '',
         //categorie: null,
         miseAPrix: 0,
-        prixVente : 25012003,
+        prixVente : 0,
         dateDebutEncheres: '',
         dateFinEncheres: ''
       },
@@ -151,6 +151,7 @@ export default {
       try {
         // Envoi dans le back des datas via axios
         articleRetrait.value.article.vendeur = userInfo.value;
+        articleRetrait.value.article.prixVente = articleRetrait.value.article.miseAPrix;
         console.log("--LOG-- userInfo.value :");
         console.log(userInfo.value);
         console.log("--LOG-- articleRetrait.value.article.vendeur :");
