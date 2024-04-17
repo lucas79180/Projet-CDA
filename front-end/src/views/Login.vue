@@ -24,7 +24,8 @@ async function login() {
     } else {
       localStorage.removeItem('userInfo');
     }
-
+    const admin = await axios.get('/login')
+    localStorage.setItem('userAdmin', JSON.stringify( admin.data));
     emit('login')
     await router.push('/')
     window.location.reload();
@@ -45,6 +46,9 @@ window.addEventListener('beforeunload', () => {
     localStorage.removeItem('userInfo');
   }
 });
+
+
+
 </script>
 
 <template>

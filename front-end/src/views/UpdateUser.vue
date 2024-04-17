@@ -60,6 +60,7 @@ const userInfo = ref({
   rue: '',
   code_postal: '',
   ville: '',
+  administrateur: false
   // Ajoutez d'autres champs ici selon les informations que vous avez
 })
 

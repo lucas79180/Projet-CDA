@@ -10,17 +10,19 @@ const router = useRouter()
 const userInfo = ref({
   pseudo: '',
   mot_de_passe: ''
-  // Ajoutez d'autres champs ici selon les informations que vous avez
+
 })
 
 onMounted(async () => {
   try {
     const result = await axios.get('/login')
     userInfo.value = result.data // Assigner les données récupérées à userInfo
+
   } catch (error) {
     console.error('Erreur lors de la récupération des données utilisateur:', error)
   }
 })
+
 
 // Fonction pour rediriger vers la page de modification du profil
 const modifierProfil = () => {
