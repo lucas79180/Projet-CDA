@@ -29,6 +29,7 @@ public class User {
     private String mot_de_passe;
     private int credit = 0;
     private boolean administrateur = false;
+    private boolean actif = false;
 
     @JsonIgnore
     @OneToMany(mappedBy = "utilisateur")
@@ -50,7 +51,7 @@ public class User {
         this.mot_de_passe = mot_de_passe;
     }
 
-    public User(Long id, String pseudo, String nom, String prenom, String telephone, String code_postal, String email, String rue, String ville, String mot_de_passe, int credit, boolean administrateur, List<Enchere> encheres, List<ArticleVendu> articlesVendu) {
+    public User(Long id, String pseudo, String nom, String prenom, String telephone, String code_postal, String email, String rue, String ville, String mot_de_passe, int credit, boolean administrateur,boolean actif, List<Enchere> encheres, List<ArticleVendu> articlesVendu) {
         this.id = id;
         this.pseudo = pseudo;
         this.nom = nom;
@@ -63,6 +64,7 @@ public class User {
         this.mot_de_passe = mot_de_passe;
         this.credit = credit;
         this.administrateur = administrateur;
+        this.actif = actif;
         this.encheres = encheres;
         this.articlesVendu = articlesVendu;
     }

@@ -18,14 +18,21 @@ async function login() {
   try {
     const result = await axios.post('/login', user.value)
     localStorage.setItem('jwt', result.data);
-
-    if (user.value.se_souvenir_de_moi) {
+    const admin = await axios.get('/login')
+    localStorage.setItem('userAdmin', JSON.stringify( admin.data));
+    if (admin.data.actif === false)
+    {
+      localStorage.removeItem('userInfo');
+      localStorage.removeItem('jwt');
+      localStorage.removeItem('userAdmin');
+      await router.push('/')
+      window.location.reload();
+    }else if (user.value.se_souvenir_de_moi) {
       localStorage.setItem('userInfo', JSON.stringify(user.value));
     } else {
       localStorage.removeItem('userInfo');
     }
-    const admin = await axios.get('/login')
-    localStorage.setItem('userAdmin', JSON.stringify( admin.data));
+
     emit('login')
     await router.push('/')
     window.location.reload();

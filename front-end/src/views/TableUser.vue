@@ -17,6 +17,7 @@ const user = ref({
   ville: '',
   mot_de_passe: '',
   administrateur: false,
+  actif: false
 })
 
 const listeUsers = ref([])
@@ -67,8 +68,8 @@ onMounted(() => {
     <TableElement
         @edit="(user) => edit(user)"
         @delete="(user) => remove(user)"
-        :labels="['Pseudo', 'Prénom', 'Nom', 'Email', 'Telephone', 'Rue', 'Code postal', 'Ville','Administrateur']"
-        :fields="['pseudo', 'prenom', 'nom', 'email', 'telephone', 'rue', 'code_postal', 'ville','administrateur']"
+        :labels="['Pseudo', 'Prénom', 'Nom', 'Email', 'Telephone', 'Rue', 'Code postal', 'Ville','Administrateur','Actif']"
+        :fields="['pseudo', 'prenom', 'nom', 'email', 'telephone', 'rue', 'code_postal', 'ville','administrateur','actif']"
         :listeUser="listeUsers" />
 
   </main>
