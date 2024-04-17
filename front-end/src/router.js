@@ -13,6 +13,7 @@ import ForgotPassword from "@/views/ForgotPassword.vue";
 import Navbar from "@/views/Navbar.vue";
 import axios from "@/axios/instance.js";
 import {onMounted, ref} from "vue";
+import Credit from "@/views/Credit.vue";
 
 function isAuthenticated() {
     return localStorage.getItem('jwt') !== null;
@@ -20,56 +21,68 @@ function isAuthenticated() {
 
 function isAdmin() {
     const userAdmin = JSON.parse(localStorage.getItem('userAdmin'));
-    console.log("dataAdmin",userAdmin)
     return userAdmin.administrateur === true; // Adapt to your user object structure
 }
-
+function isActif() {
+    const userActif = JSON.parse(localStorage.getItem('userAdmin'));
+console.log(userActif)
+    return userActif.actif === true; // Adapt to your user object structure
+}
 const routes = [
     {
         path: '/nouveau-article',
         name: 'NouveauArticle',
         component: NouveauArticle,
-        meta: { requiresAuth: true }
+        meta: { requiresActif: true ,requiresAuth: true  }
     },
     {
         path: '/inscription',
         name: 'User',
-        component: User
+        component: User,
     },
     {
         path: '/connexion',
         name: 'Login',
-        component: Login
+        component: Login,
+
+
     },
     {
         path: '/update',
         name: 'updateUser',
         component: UpdateUser,
-        meta: { requiresAuth: true }
+        meta: { requiresAuth: true , requiresActif: true }
     },
     {
         path: '/mon-profil',
         name: 'infoUser',
         component: InfoUser,
-        meta: { requiresAuth: true }
+        meta: { requiresAuth: true , requiresActif: true  }
     },
     {
         path: '/utilisateurs',
         name: 'TableUser',
         component: TableUser,
-        meta: { requiresAuth: true, requiresAdmin: true }
+        meta: { requiresAuth: true, requiresAdmin: true , requiresActif: true }
     },
     {
         path: '/utilisateurs/:id/delete',
         name: 'Confirmation',
         props: true,
         component: Confirmation,
-        meta: { requiresAuth: true, requiresAdmin: true }
+        meta: { requiresAuth: true, requiresAdmin: true , requiresActif: true }
     },
     {
         path: '/forgot-password',
         name: 'ForgotPassword',
-        component: ForgotPassword
+        component: ForgotPassword,
+        meta: { requiresAuth: true, requiresActif: true }
+    },
+    {
+        path: '/ajout-credit',
+        name: 'Credit',
+        component: Credit,
+        meta: { requiresAuth: true, requiresActif: true }
     },
     // Ajoutez une route de redirection pour /utilisateurs
     {
@@ -88,8 +101,13 @@ router.beforeEach((to, from, next) => {
         next({ name: 'Login' });
         localStorage.removeItem('jwt')
     } else if (to.meta.requiresAdmin && !isAdmin()) {
-        next({ name: 'Login' });
+        next({name: 'Login'});
         localStorage.removeItem('jwt')
+    }
+    else if (to.meta.requiresActif && !isActif()) {
+        alert("tu es ban !!")
+            next({ name: 'Login' });
+            localStorage.removeItem('jwt')
     } else {
         next();
     }

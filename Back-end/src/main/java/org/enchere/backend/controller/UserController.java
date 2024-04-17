@@ -101,7 +101,7 @@ public class UserController {
         utilisateurExistant.setRue(utilisateurModifie.getRue());
         utilisateurExistant.setTelephone(utilisateurModifie.getTelephone());
         utilisateurExistant.setAdministrateur(utilisateurModifie.isAdministrateur());
-
+        utilisateurExistant.setCredit(utilisateurModifie.getCredit());
         // Enregistrez les modifications dans la base de données via le service
         return userService.modifierUser(utilisateurExistant);
     }

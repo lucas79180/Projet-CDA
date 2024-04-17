@@ -104,7 +104,8 @@ public class UserServiceImpl implements UserService {
         utilisateurExistant.setRue(user.getRue());
         utilisateurExistant.setAdministrateur(user.isAdministrateur());
         utilisateurExistant.setTelephone(user.getTelephone());
-
+        utilisateurExistant.setCredit(user.getCredit());
+        utilisateurExistant.setActif(user.isActif());
         // Enregistrer les modifications dans la base de données
         userRepository.save(utilisateurExistant);
 

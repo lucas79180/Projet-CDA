@@ -2,7 +2,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import axios from "@/axios/instance.js";
-import { useRouter } from 'vue-router'
+import {RouterLink, useRouter} from 'vue-router'
 
 const router = useRouter()
 
@@ -30,6 +30,7 @@ const modifierProfil = () => {
 }
 </script>
 <template>
+
   <main>
     <div class="container">
       <h1 class="title">Mon Profil</h1>
@@ -66,6 +67,14 @@ const modifierProfil = () => {
             <p>{{ userInfo.rue }}, {{ userInfo.code_postal }}, {{ userInfo.ville }}</p>
           </div>
 
+
+          <div class="info-item">
+            <p><strong>Credit:</strong></p>
+            <p>{{ userInfo.credit }}</p>
+            <nav >
+            <router-link to="/ajout-credit">Ajout de crédit</router-link>
+            </nav>
+          </div>
           <!-- Ajouter d'autres champs ici selon les informations disponibles -->
 
           <button @click="modifierProfil">Modifier</button>

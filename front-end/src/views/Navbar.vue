@@ -11,6 +11,7 @@
       <nav>
         <router-link to="/nouveau-article">Vendre un article</router-link>
         <router-link to="/mon-profil"> Mon profil</router-link>
+
         <router-link  v-if="user.administrateur" to="/utilisateurs"> Utilisateurs </router-link>
         <button type="button" @click="logout"> Déconnexion</button>
       </nav>

@@ -55,6 +55,8 @@
       <label for="administrateur">Administrateur :</label>
       <input type="checkbox" id="administrateur" v-model="editingUser.administrateur">
 
+      <label for="Actif">Actif :</label>
+      <input type="checkbox" id="actif" v-model="editingUser.actif">
       <button type="submit">Enregistrer</button>
       <button @click="cancelEdit">Annuler</button>
     </form>
