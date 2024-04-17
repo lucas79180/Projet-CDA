@@ -14,6 +14,8 @@ import Navbar from "@/views/Navbar.vue";
 import axios from "@/axios/instance.js";
 import {onMounted, ref} from "vue";
 import Credit from "@/views/Credit.vue";
+import Error404 from "@/views/Error404.vue";
+import ErrorLayout from "@/views/ErrorLayout.vue";
 
 function isAuthenticated() {
     return localStorage.getItem('jwt') !== null;
@@ -23,6 +25,7 @@ function isAdmin() {
     const userAdmin = JSON.parse(localStorage.getItem('userAdmin'));
     return userAdmin.administrateur === true; // Adapt to your user object structure
 }
+
 function isActif() {
     const userActif = JSON.parse(localStorage.getItem('userAdmin'));
 console.log(userActif)
@@ -30,7 +33,7 @@ console.log(userActif)
 }
 const routes = [
     {
-        path: '/nouveau-article',
+        path: '/nouveau-article/:id',
         name: 'NouveauArticle',
         component: NouveauArticle,
         meta: { requiresActif: true ,requiresAuth: true  }
@@ -43,9 +46,7 @@ const routes = [
     {
         path: '/connexion',
         name: 'Login',
-        component: Login,
-
-
+        component: Login
     },
     {
         path: '/update',
@@ -88,6 +89,16 @@ const routes = [
     {
         path: '/utilisateurs',
         redirect: { name: 'Login' } // Redirigez vers la page de connexion
+    },
+    {
+        path: '/',
+        component: ErrorLayout,
+        children: [
+            {
+                path: '/:catchAll(.*)',
+                component: Error404
+            }
+        ]
     }
 ];
 

@@ -38,9 +38,16 @@ public class ArticleVendu {
     @JoinColumn(name = "no_categorie")
     private Categorie categorie;
 
-    @JsonIgnore
+    @Column(name = "image_url")
+    private String imageUrl;
+
+
+    //@OneToOne(mappedBy = "articleVendu")
+    //private Retrait retrait;
+
+    /*@JsonIgnore
     @OneToMany
-    private List<Enchere> encheres;
+    private List<Enchere> encheres;*/
 
     @ManyToOne
     @JoinColumn(name = "no_utilisateur", nullable = false)
@@ -60,7 +67,9 @@ public class ArticleVendu {
         this.prixVente = prixVente;
         //this.etatVente = etatVente;
         this.categorie = categorie;
-        this.encheres = encheres;
+        //this.retrait = retrait;
+        //this.encheres = encheres;
+        //this.encheres = encheres;
         this.vendeur = vendeur;
     }
 

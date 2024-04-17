@@ -9,7 +9,7 @@ import java.util.List;
 public interface ArticleVenduService {
 
     List<ArticleVendu> getAllArticles();
-    ArticleVendu getArticleById(Integer id);
+    ArticleRetrait getArticleById(Integer id);
     ArticleVendu saveArticle(ArticleRetrait article);
     void deleteArticle(Integer id);
 

@@ -1,45 +1,44 @@
 <template>
   <div class="nouveau-article">
     <div class="form-container">
-      <h2 class="form-title">Nouveau article</h2>
+      <h2 ref="formTitle" class="form-title">article</h2>
       <form class="form" @submit.prevent="submitForm">
         <div class="form-group">
+          <h3>Article</h3>
           <FormTextElement label="Nom de l'article" type="text" :object="articleRetrait.article" field="nomArticle"/>
-        </div>
-        <div class="form-group">
+
           <label for="description">Description :</label>
           <textarea id="description" v-model="articleRetrait.article['description']" rows="4" required></textarea>
-        </div>
-        <div class="form-group">
+
           <label for="categorie">Catégorie:</label>
           <select id="categorie" v-model="articleRetrait.article['categorie']" required v-if="categories.length > 0">
             <option value="" disabled>Sélectionnez une catégorie</option>
-           <!-- <option v-for="categorie in categories" :key="categorie.noCategorie" :value="categorie.noCategorie">{{ categorie.libelle }}</option> -->
-            <option v-for="categorie in categories" :key="categorie.noCategorie" :value="{ 'noCategorie': categorie.noCategorie, 'libelle': categorie.libelle }">
+            <!-- <option v-for="categorie in categories" :key="categorie.noCategorie" :value="categorie.noCategorie">{{ categorie.libelle }}</option> -->
+            <option v-for="categorie in categories" :key="categorie.noCategorie"
+                    :value="{ 'noCategorie': categorie.noCategorie, 'libelle': categorie.libelle }">
               {{ categorie.libelle }}
             </option>
 
           </select>
           <span v-else>Loading categories...</span>
-        </div>
 
-        <div class="form-group">
-          <FormTextElement label="Mise à prix" type="number" :object="articleRetrait.article" field="miseAPrix" required/>
+          <FormTextElement label="Mise à prix (en points)" type="number" :object="articleRetrait.article" field="miseAPrix"
+                           required/>
+
+          <FormTextElement label="Début de l'enchère" type="date" :object="articleRetrait.article"
+                           field="dateDebutEncheres" required/>
+
+          <FormTextElement label="Fin de l'enchère" type="date" :object="articleRetrait.article"
+                           field="dateFinEncheres" required/>
         </div>
         <div class="form-group">
-          <FormTextElement label="Début de l'enchère" type="datetime-local" :object="articleRetrait.article" field="dateDebutEncheres" required/>
-        </div>
-        <div class="form-group">
-          <FormTextElement label="Fin de l'enchère" type="datetime-local" :object="articleRetrait.article" field="dateFinEncheres" required/>
-        </div>
-        <div class="form-group">
-          <FormTextElement label="Retrait - Rue" type="text" :object="articleRetrait.retrait" field="rue" required/>
-        </div>
-        <div class="form-group">
-          <FormTextElement label="Retrait - Code Postal" type="text" :object="articleRetrait.retrait" field="code_postal" required/>
-        </div>
-        <div class="form-group">
-          <FormTextElement label="Retrait - Ville" type="text" :object="articleRetrait.retrait" field="ville" required/>
+          <h3>Retrait</h3>
+          <FormTextElement label="Rue" type="text" :object="articleRetrait.retrait" field="rue" required/>
+
+          <FormTextElement label="Code Postal" type="text" :object="articleRetrait.retrait"
+                           field="code_postal" required/>
+
+          <FormTextElement label="Ville" type="text" :object="articleRetrait.retrait" field="ville" required/>
         </div>
         <!-- Actions du formulaire -->
         <div class="form-actions">
@@ -54,9 +53,13 @@
 <script>
 import FormTextElement from "@/components/FormTextElement.vue";
 import axios from "../axios/instance";
-import { onMounted, ref } from "vue";
+import {onMounted, ref} from "vue";
+import {useRoute} from "vue-router";
+import router from "@/router.js";
 
 onMounted(async () => {
+
+  // Obtention des informations de l'utilisateur connecté
   try {
     const result = await axios.get('/login')
     userInfo.value = result.data // Assigner les données récupérées à userInfo
@@ -72,13 +75,22 @@ export default {
     FormTextElement
   },
   setup() {
+
+    // Déclaration des variables
+    const isEditing = ref(false); // Permet de connaitre l'état de la page
+    const categories = ref([]); // Contiendra la liste des catégorie chargé avec les datas en bdd
+    const listeErreurs = ref([]); // Contiendra la liste des erreurs
+    const userInfo = ref([]);
+    const refArticle = useRoute().params.id; // On récupéré l'id de l'article passé en paramètre
+    const formTitle = ref(null); // Contiendra le libellé de H2
     const articleRetrait = ref({
-      article : {
+      article: {
+        noArticle: null,
         nomArticle: '',
         description: '',
         //categorie: null,
         miseAPrix: 0,
-        prixVente : 25012003,
+        prixVente: 0,
         dateDebutEncheres: '',
         dateFinEncheres: ''
       },
@@ -87,30 +99,56 @@ export default {
         code_postal: '',
         ville: ''
       }
-
     });
 
+    // Permet de charger la page en fonction de ce qui est passé en param
+    async function chargementArticle() {
+      console.log("refArticle = ", refArticle)
+      if (refArticle === "add") {
+        console.log("mode ADD")
+        isEditing.value = false;
+        formTitle.value.innerText = "Création d'un nouvel article";
+      } else {
+        console.log("mode EDIT")
+        isEditing.value = true;
+        // En mode EDIT, la variable refArticle comprend
+        formTitle.value.innerText = "EDIT";
+
+        try {
+          const reponseHTTP = await axios.get('/article/' + refArticle)
+          articleRetrait.value = reponseHTTP.data;
+          console.log(articleRetrait.value)
+          formTitle.value.innerText = "Modification de l'article " + articleRetrait.value.article.nomArticle;
+
+          // Comparaison de la date de début d'enchères avec la date du jour
+          const dateDebutEncheres = new Date(articleRetrait.value.article.dateDebutEncheres);
+          const dateDuJour = new Date();
+
+          if (dateDebutEncheres <= dateDuJour) {
+            // La date de début d'enchères est antérieur ou égale à la date du jour donc modification non autorisé
+            console.log("La date de début d'enchères est antérieur ou égale à la date du jour donc modification non autorisé");
+            isEditing.value = false;
+            await router.push('/article/' + refArticle);
+
+          }
+        } catch (erreur) {
+          console.error("Erreur lors de la récupération du détail de l'article :", erreur);
+          listeErreurs.value.push("Erreur lors de la récupération du détail de l'article.");
+
+          // En cas d'erreur alors article non trouvé donc retour à la page précédente
+          await router.push('/non-trouve');
+        }
+      }
+    }
+
     // Définir la date du jour
-    const today = new Date().toISOString().slice(0, 16);
+    articleRetrait.value.article.dateDebutEncheres = new Date().toISOString().slice(0, 16);
 
     // Définir la date dans 30 jours
     const thirtyDaysLater = new Date();
     thirtyDaysLater.setDate(thirtyDaysLater.getDate() + 30);
-    const dateThirtyDaysLater = thirtyDaysLater.toISOString().slice(0, 16);
+    articleRetrait.value.article.dateFinEncheres = thirtyDaysLater.toISOString().slice(0, 16);
 
-    // Attribuer les valeurs aux champs date appropriés
-    articleRetrait.value.article.dateDebutEncheres = today;
-    articleRetrait.value.article.dateFinEncheres = dateThirtyDaysLater;
-
-    // EN MODE TEST [DEBUT]
-    //article.value.nomArticle = "test du nom de l'article";
-    //article.value.description = "test de la description  de l'article";
-    //article.value.miseAPrix = 150;
-    //EN MODE TEST [FIN]
-
-    const categories = ref([]);
-    const listeErreurs = ref([]);
-    const userInfo = ref([]);
 
     async function recupererCategories() {
       try {
@@ -125,7 +163,7 @@ export default {
       }
     }
 
-    async function getUser(){
+    async function getUser() {
       try {
         const result = await axios.get('/login')
         userInfo.value = result.data // Assigner les données récupérées à userInfo
@@ -142,6 +180,7 @@ export default {
     onMounted(() => {
       recupererCategories();
       getUser();
+      chargementArticle();
     });
 
 
@@ -151,27 +190,22 @@ export default {
       try {
         // Envoi dans le back des datas via axios
         articleRetrait.value.article.vendeur = userInfo.value;
+        articleRetrait.value.article.prixVente = articleRetrait.value.article.miseAPrix;
         console.log("--LOG-- userInfo.value :");
         console.log(userInfo.value);
         console.log("--LOG-- articleRetrait.value.article.vendeur :");
         console.log(articleRetrait.value.article.vendeur);
-        await axios.post(`articles`, articleRetrait.value)
+        articleRetrait.value.article = await axios.post(`article`, articleRetrait.value)
 
-        // si jamais on n'a pas d'erreur
         // on vide la variable listeErreurs
         listeErreurs.value = []
 
-        // après enregistrement, réinistalisation du forms :
-        articleRetrait.value.article.nomArticle = ''
-        articleRetrait.value.article.description = ''
-        articleRetrait.value.article.categorie = null
-        articleRetrait.value.article.miseAPrix = 0
-        articleRetrait.value.article.dateDebutEncheres = ''
-        articleRetrait.value.article.dateFinEncheres = ''
+        // Après avoir sauvegarder en bddd, redirection vers la page de l'article
+        console.log("--LOG-- enreg ok")
+        console.log("--LOG-- articleRetrait.value : ", articleRetrait.value)
+        console.log("--LOG-- articleRetrait.value.article.noArticle :", articleRetrait.value.article.data.article.noArticle)
+        await router.push('/article/' + articleRetrait.value.article.data.article.noArticle);
 
-        articleRetrait.value.retrait.rue = ''
-        articleRetrait.value.retrait.code_postal = ''
-        articleRetrait.value.retrait.ville = ''
 
 
       } catch (erreur) {
@@ -190,7 +224,8 @@ export default {
       categories,
       listeErreurs,
       submitForm,
-      cancel
+      cancel,
+      formTitle
     };
   }
 };

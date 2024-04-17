@@ -32,20 +32,20 @@ public class ArticleVenduRestController {
 
     // Endpoint pour récupérer un article par son ID
     @GetMapping("/{id}")
-    public ArticleVendu getArticleById(@PathVariable int id) {
+    public ArticleRetrait getArticleById(@PathVariable int id) {
         return articleVenduService.getArticleById(id);
     }
 
     // Endpoint pour créer un nouvel article
     @PostMapping
-    public void createArticle(@RequestBody ArticleRetrait article) {
+    public ArticleRetrait createArticle(@RequestBody ArticleRetrait article) {
 
         System.out.println("--LOG-- exec createArticle()");
-        System.out.println("--LOG-- article: ");
-
-        System.out.println(article.getRetrait());
-
+        System.out.println("--LOG-- article: " + article);
+        System.out.println("--LOG-- Save");
         articleVenduService.saveArticle(article);
+        System.out.println("--LOG-- article: " + article);
+        return article;
     }
 
     // Endpoint pour supprimer un article par son ID
