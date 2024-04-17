@@ -67,13 +67,6 @@ const placeBid = async () => {
     console.log('ID de l\'article:', route.params.id);
     console.log('Prix de l\'enchère proposé:', bidPrice.value);
 
-    // Comparaison de la date de fin d'enchères avec la date du jour
-    const dateFinEnchere = new Date(article.value.dateFinEnchere);
-    const dateDuJour = new Date();
-
-    if (dateFinEnchere > dateDuJour) {
-      console.log('L\'article a déjà été vendu.');
-      // Si l'article a déjà été vendu, effectuez une requête PUT pour mettre à jour le prix de vente
       const response = await axios.put(`/article/${route.params.id}/bid`, {
         bidPrice: bidPrice.value
       });
@@ -84,17 +77,6 @@ const placeBid = async () => {
       article.value.prixVente = response.data.newPrice;
 
       console.log('Prix de vente mis à jour:', article.value.prixVente);
-    } else {
-      console.log('L\'article n\'a pas encore été vendu.');
-      // Si l'article n'a pas encore été vendu, effectuez une requête POST pour créer une nouvelle enchère
-      const response = await axios.post(`/article/${route.params.id}/enchere`, {
-        bidPrice: bidPrice.value
-      });
-
-      console.log('Réponse du serveur:', response.data);
-
-      // Mettre à jour l'affichage ou effectuer d'autres actions en fonction de la réponse du serveur
-    }
   } catch (error) {
     console.error('Erreur lors de la soumission de l\'enchère :', error);
   }
