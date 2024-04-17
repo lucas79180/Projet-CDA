@@ -41,14 +41,6 @@ public class ArticleVendu {
     @Column(name = "image_url")
     private String imageUrl;
 
-
-    //@OneToOne(mappedBy = "articleVendu")
-    //private Retrait retrait;
-
-    /*@JsonIgnore
-    @OneToMany
-    private List<Enchere> encheres;*/
-
     @ManyToOne
     @JoinColumn(name = "no_utilisateur", nullable = false)
     private User vendeur;
@@ -65,11 +57,7 @@ public class ArticleVendu {
         this.dateFinEncheres = dateFinEncheres;
         this.miseAPrix = miseAPrix;
         this.prixVente = prixVente;
-        //this.etatVente = etatVente;
         this.categorie = categorie;
-        //this.retrait = retrait;
-        //this.encheres = encheres;
-        //this.encheres = encheres;
         this.vendeur = vendeur;
     }
 

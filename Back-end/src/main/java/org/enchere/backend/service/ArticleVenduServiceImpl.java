@@ -125,7 +125,6 @@ public class ArticleVenduServiceImpl implements ArticleVenduService {
         articleExistant.setPrixVente(article.getPrixVente());
         articleExistant.setDateDebutEncheres(article.getDateDebutEncheres());
         articleExistant.setDateFinEncheres(article.getDateFinEncheres());
-        articleExistant.setEncheres(article.getEncheres());
 
         // Enregistrer les modifications dans la base de données
         articleVenduRepository.save(articleExistant);

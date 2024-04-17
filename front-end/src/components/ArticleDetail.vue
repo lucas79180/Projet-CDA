@@ -56,14 +56,24 @@ const formatDate = (dateString) => {
 
 const placeBid = async () => {
   try {
-    const response = await axios.post(`/article/${route.params.id}/bid`, {
+    console.log('Envoi de la requête pour placer une enchère...');
+    console.log('ID de l\'article:', route.params.id);
+    console.log('Prix de l\'enchère proposé:', bidPrice.value);
+
+    const response = await axios.put(`/article/${route.params.id}/bid`, {
       bidPrice: bidPrice.value
     });
+
+    console.log('Réponse du serveur:', response.data);
+
     // Mettre à jour le prix de vente de l'article avec la nouvelle valeur retournée par le serveur
     article.value.prixVente = response.data.newPrice;
+
+    console.log('Prix de vente mis à jour:', article.value.prixVente);
   } catch (error) {
     console.error('Erreur lors de la soumission de l\'enchère :', error);
   }
+
 };
 </script>
 
