@@ -38,6 +38,10 @@ public class ArticleVendu {
     @JoinColumn(name = "no_categorie")
     private Categorie categorie;
 
+    @Column(name = "image_url")
+    private String imageUrl;
+
+
     //@OneToOne(mappedBy = "articleVendu")
     //private Retrait retrait;
 

@@ -22,14 +22,24 @@ nav {
 
 }
 
-nav a {
+nav a,
+.nav-link{
   margin-right: 20px;
   text-decoration: none;
   color: #5a5a5a; /* Gris foncé */
   font-weight: bold;
+
+  border: none; /* Supprimer la bordure */
+  background: none; /* Supprimer le fond coloré */
+  cursor: pointer; /* Définir le curseur comme pointer */
+
+  font-size: 16px; /* Ajuster la taille du texte */
+  padding: 0; /* Supprimer le rembourrage du bouton */
+
 }
 
-nav a:hover {
+nav a:hover,
+.nav-link:hover {
   color: #8c8c8c; /* Gris moyen */
 }
 
@@ -57,7 +67,9 @@ nav a:hover {
 }
 
 input[type="text"],
+input[type="number"],
 input[type="email"],
+input[type="date"],
 input[type="password"],
 input[type="tel"] {
   width: calc(100% - 24px); /* Ajustement pour le padding */

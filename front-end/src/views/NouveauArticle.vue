@@ -4,13 +4,12 @@
       <h2 ref="formTitle" class="form-title">article</h2>
       <form class="form" @submit.prevent="submitForm">
         <div class="form-group">
+          <h3>Article</h3>
           <FormTextElement label="Nom de l'article" type="text" :object="articleRetrait.article" field="nomArticle"/>
-        </div>
-        <div class="form-group">
+
           <label for="description">Description :</label>
           <textarea id="description" v-model="articleRetrait.article['description']" rows="4" required></textarea>
-        </div>
-        <div class="form-group">
+
           <label for="categorie">Catégorie:</label>
           <select id="categorie" v-model="articleRetrait.article['categorie']" required v-if="categories.length > 0">
             <option value="" disabled>Sélectionnez une catégorie</option>
@@ -22,29 +21,24 @@
 
           </select>
           <span v-else>Loading categories...</span>
-        </div>
 
-        <div class="form-group">
-          <FormTextElement label="Mise à prix" type="number" :object="articleRetrait.article" field="miseAPrix"
+          <FormTextElement label="Mise à prix (en points)" type="number" :object="articleRetrait.article" field="miseAPrix"
                            required/>
-        </div>
-        <div class="form-group">
-          <FormTextElement label="Début de l'enchère" type="datetime-local" :object="articleRetrait.article"
+
+          <FormTextElement label="Début de l'enchère" type="date" :object="articleRetrait.article"
                            field="dateDebutEncheres" required/>
-        </div>
-        <div class="form-group">
-          <FormTextElement label="Fin de l'enchère" type="datetime-local" :object="articleRetrait.article"
+
+          <FormTextElement label="Fin de l'enchère" type="date" :object="articleRetrait.article"
                            field="dateFinEncheres" required/>
         </div>
         <div class="form-group">
-          <FormTextElement label="Retrait - Rue" type="text" :object="articleRetrait.retrait" field="rue" required/>
-        </div>
-        <div class="form-group">
-          <FormTextElement label="Retrait - Code Postal" type="text" :object="articleRetrait.retrait"
+          <h3>Retrait</h3>
+          <FormTextElement label="Rue" type="text" :object="articleRetrait.retrait" field="rue" required/>
+
+          <FormTextElement label="Code Postal" type="text" :object="articleRetrait.retrait"
                            field="code_postal" required/>
-        </div>
-        <div class="form-group">
-          <FormTextElement label="Retrait - Ville" type="text" :object="articleRetrait.retrait" field="ville" required/>
+
+          <FormTextElement label="Ville" type="text" :object="articleRetrait.retrait" field="ville" required/>
         </div>
         <!-- Actions du formulaire -->
         <div class="form-actions">
