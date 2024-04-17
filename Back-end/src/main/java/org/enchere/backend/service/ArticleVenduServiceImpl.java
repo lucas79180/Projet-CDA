@@ -69,6 +69,7 @@ public class ArticleVenduServiceImpl implements ArticleVenduService {
         System.out.println("--LOG-- getArticle :" + newArticle.getArticle());
         retraitRepository.save(newArticle.getRetrait());
 
+        //return newArticle;
         return newArticle.getArticle();
     }
 

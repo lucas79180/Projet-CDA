@@ -201,26 +201,17 @@ export default {
         console.log(userInfo.value);
         console.log("--LOG-- articleRetrait.value.article.vendeur :");
         console.log(articleRetrait.value.article.vendeur);
-        articleRetrait.value = await axios.post(`article`, articleRetrait.value)
+        articleRetrait.value.article = await axios.post(`article`, articleRetrait.value)
 
-        // si jamais on n'a pas d'erreur
         // on vide la variable listeErreurs
         listeErreurs.value = []
 
-        console.log("enreg ok")
+        // Après avoir sauvegarder en bddd, redirection vers la page de l'article
+        console.log("--LOG-- enreg ok")
+        console.log("--LOG-- articleRetrait.value : ", articleRetrait.value)
+        console.log("--LOG-- articleRetrait.value.article.noArticle :", articleRetrait.value.article.data.article.noArticle)
+        await router.push('/article/' + articleRetrait.value.article.data.article.noArticle);
 
-        // réinistalisation du forms :
-        //articleRetrait.value.article.noArticle = 0
-        articleRetrait.value.article.nomArticle = ''
-        articleRetrait.value.article.description = ''
-        articleRetrait.value.article.categorie = null
-        articleRetrait.value.article.miseAPrix = 0
-        articleRetrait.value.article.dateDebutEncheres = ''
-        articleRetrait.value.article.dateFinEncheres = ''
-
-        articleRetrait.value.retrait.rue = ''
-        articleRetrait.value.retrait.code_postal = ''
-        articleRetrait.value.retrait.ville = ''
 
 
       } catch (erreur) {
