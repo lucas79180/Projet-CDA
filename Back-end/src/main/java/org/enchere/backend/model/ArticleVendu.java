@@ -41,9 +41,9 @@ public class ArticleVendu {
     //@OneToOne(mappedBy = "articleVendu")
     //private Retrait retrait;
 
-    @JsonIgnore
+    /*@JsonIgnore
     @OneToMany
-    private List<Enchere> encheres;
+    private List<Enchere> encheres;*/
 
     @ManyToOne
     @JoinColumn(name = "no_utilisateur", nullable = false)
@@ -65,7 +65,7 @@ public class ArticleVendu {
         this.categorie = categorie;
         //this.retrait = retrait;
         //this.encheres = encheres;
-        this.encheres = encheres;
+        //this.encheres = encheres;
         this.vendeur = vendeur;
     }
 

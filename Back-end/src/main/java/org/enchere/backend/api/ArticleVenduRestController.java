@@ -32,7 +32,7 @@ public class ArticleVenduRestController {
 
     // Endpoint pour récupérer un article par son ID
     @GetMapping("/{id}")
-    public ArticleVendu getArticleById(@PathVariable int id) {
+    public ArticleRetrait getArticleById(@PathVariable int id) {
         return articleVenduService.getArticleById(id);
     }
 

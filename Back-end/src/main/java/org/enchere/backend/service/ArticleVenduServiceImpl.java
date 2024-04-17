@@ -32,8 +32,17 @@ public class ArticleVenduServiceImpl implements ArticleVenduService {
     }
 
     @Override
-    public ArticleVendu getArticleById(Integer id) {
-        return articleVenduRepository.findById(id).orElse(null);
+    public ArticleRetrait getArticleById(Integer id) {
+
+
+        ArticleRetrait articleRechercher = new ArticleRetrait();
+
+        articleRechercher.setArticle(articleVenduRepository.findById(id).orElse(null));
+        System.out.println("--LOG-- articleRechercher = " + articleRechercher);
+        articleRechercher.setRetrait(retraitRepository.findByIdArticle(articleRechercher.getArticle().getNoArticle()));
+        return articleRechercher;
+
+
     }
 
     @Override
