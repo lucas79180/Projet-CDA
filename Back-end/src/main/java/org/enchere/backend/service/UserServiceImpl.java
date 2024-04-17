@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import org.enchere.backend.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.enchere.backend.model.User;
@@ -57,6 +58,15 @@ public class UserServiceImpl implements UserService {
             }
         }
         return null;
+    }
+
+    @Override
+    public User loadUserByUsername(String username) {
+        // Recherchez l'utilisateur par son nom d'utilisateur ou son email dans le UserRepository
+        User user = (User) userRepository.findByEmail(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Utilisateur non trouvé avec le nom d'utilisateur ou l'email: " + username));
+
+        return user;
     }
 
     /**

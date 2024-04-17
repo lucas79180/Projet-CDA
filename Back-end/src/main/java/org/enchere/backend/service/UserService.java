@@ -21,4 +21,6 @@ public interface UserService {
     User recupererUser(String pseudo);
 
     boolean transfertMontant(User userProvenance, User userDestination, Integer montant);
+
+    Object loadUserByUsername(String username);
 }

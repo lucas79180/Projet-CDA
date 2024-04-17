@@ -1,7 +1,5 @@
 // src/router.js
 import { createRouter, createWebHistory } from 'vue-router';
-
-// Importez vos composants
 import NouveauArticle from './views/NouveauArticle.vue';
 import UpdateUser from "@/views/UpdateUser.vue";
 import InfoUser from "@/views/infoUser.vue";
@@ -16,6 +14,8 @@ import {onMounted, ref} from "vue";
 import Credit from "@/views/Credit.vue";
 import Error404 from "@/views/Error404.vue";
 import ErrorLayout from "@/views/ErrorLayout.vue";
+import ArticleDetail from "@/components/ArticleDetail.vue";
+
 
 function isAuthenticated() {
     return localStorage.getItem('jwt') !== null;
@@ -89,6 +89,12 @@ const routes = [
     {
         path: '/utilisateurs',
         redirect: { name: 'Login' } // Redirigez vers la page de connexion
+    },
+    {
+        path: '/article/:id',
+        name: 'articleDetail',
+        component: ArticleDetail,
+        props: true
     },
     {
         path: '/',

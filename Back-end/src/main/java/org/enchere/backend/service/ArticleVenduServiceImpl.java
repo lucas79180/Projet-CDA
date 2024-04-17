@@ -5,9 +5,12 @@ import org.enchere.backend.Repository.RetraitRepository;
 import org.enchere.backend.model.ArticleRetrait;
 import org.enchere.backend.model.ArticleVendu;
 import org.enchere.backend.model.Retrait;
+import org.enchere.backend.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -101,5 +104,31 @@ public class ArticleVenduServiceImpl implements ArticleVenduService {
     @Override
     public void deleteRetraitById(Integer id) {
         retraitRepository.deleteById(id);
+    }
+
+    @Override
+    public ArticleVendu consulterArticleParId(Long id) {
+        return articleVenduRepository.findById(Math.toIntExact(id)).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilisateur non trouvé avec l'ID : " + id));
+    }
+
+    @Override
+    public ArticleVendu modifierArticle(ArticleVendu article) {
+        // Récupérer l'utilisateur existant par son ID
+        ArticleVendu articleExistant = articleVenduRepository.findById(article.getNoArticle())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Article non trouvé avec l'ID : " + article.getNoArticle()));
+
+        // Mettre à jour les champs de l'utilisateur avec les valeurs de l'utilisateur modifié
+        articleExistant.setNomArticle(article.getNomArticle());
+        articleExistant.setCategorie(article.getCategorie());
+        articleExistant.setDescription(article.getDescription());
+        articleExistant.setMiseAPrix(article.getMiseAPrix());
+        articleExistant.setPrixVente(article.getPrixVente());
+        articleExistant.setDateDebutEncheres(article.getDateDebutEncheres());
+        articleExistant.setDateFinEncheres(article.getDateFinEncheres());
+
+        // Enregistrer les modifications dans la base de données
+        articleVenduRepository.save(articleExistant);
+
+        return articleExistant;
     }
 }
