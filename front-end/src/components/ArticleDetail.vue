@@ -7,7 +7,7 @@
     <p>Mise à prix : {{article.miseAPrix}}</p>
     <p>Date de fin des enchères : {{ formatDate(article.dateFinEncheres) }}</p>
     <p>Retrait : {{article.retrait}}</p>
-    <p>Prix de vente : {{ article.prixVente }} pt</p>
+    <p>Prix de vente : {{ article.prixVente }} pt par {{ article.vendeur.pseudo }}</p>
     <p>Vendeur : {{ article.vendeur.pseudo }}</p>
     <p>Proposition :
       <input type="number" v-model.number="bidPrice" :min="article.prixVente" step="1">
@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import {ref, onMounted, watch} from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import axios from '../axios/instance';
 
@@ -46,6 +46,12 @@ onMounted(() => {
   fetchArticle();
 });
 
+
+watch(article, (newValue) => {
+  // Cette fonction sera appelée à chaque fois que la valeur de l'article change
+  // Vous pouvez y ajouter tout code nécessaire pour mettre à jour l'affichage
+});
+
 const formatDate = (dateString) => {
   const date = new Date(dateString);
   const day = date.getDate().toString().padStart(2, '0');
@@ -54,27 +60,47 @@ const formatDate = (dateString) => {
   return `${day}/${month}/${year}`;
 };
 
+
 const placeBid = async () => {
   try {
     console.log('Envoi de la requête pour placer une enchère...');
     console.log('ID de l\'article:', route.params.id);
     console.log('Prix de l\'enchère proposé:', bidPrice.value);
 
-    const response = await axios.put(`/article/${route.params.id}/bid`, {
-      bidPrice: bidPrice.value
-    });
+    // Comparaison de la date de fin d'enchères avec la date du jour
+    const dateFinEnchere = new Date(article.value.dateFinEnchere);
+    const dateDuJour = new Date();
 
-    console.log('Réponse du serveur:', response.data);
+    if (dateFinEnchere > dateDuJour) {
+      console.log('L\'article a déjà été vendu.');
+      // Si l'article a déjà été vendu, effectuez une requête PUT pour mettre à jour le prix de vente
+      const response = await axios.put(`/article/${route.params.id}/bid`, {
+        bidPrice: bidPrice.value
+      });
+      window.location.reload();
+      console.log('Réponse du serveur:', response.data);
 
-    // Mettre à jour le prix de vente de l'article avec la nouvelle valeur retournée par le serveur
-    article.value.prixVente = response.data.newPrice;
+      // Mettre à jour le prix de vente de l'article avec la nouvelle valeur retournée par le serveur
+      article.value.prixVente = response.data.newPrice;
 
-    console.log('Prix de vente mis à jour:', article.value.prixVente);
+      console.log('Prix de vente mis à jour:', article.value.prixVente);
+    } else {
+      console.log('L\'article n\'a pas encore été vendu.');
+      // Si l'article n'a pas encore été vendu, effectuez une requête POST pour créer une nouvelle enchère
+      const response = await axios.post(`/article/${route.params.id}/enchere`, {
+        bidPrice: bidPrice.value
+      });
+
+      console.log('Réponse du serveur:', response.data);
+
+      // Mettre à jour l'affichage ou effectuer d'autres actions en fonction de la réponse du serveur
+    }
   } catch (error) {
     console.error('Erreur lors de la soumission de l\'enchère :', error);
   }
-
 };
+
+
 </script>
 
 <style scoped>
