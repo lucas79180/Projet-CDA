@@ -77,7 +77,7 @@ const modifierProfil = async () => {
   try {
     console.log(userInfo.value)
     await axios.put(`/utilisateurs/${userInfo.value.id}`, userInfo.value)
-    await router.push('/monprofil') // Rediriger vers la page de profil après la modification
+    await router.push('/mon-profil') // Rediriger vers la page de profil après la modification
   } catch (error) {
     console.error('Erreur lors de la modification du profil:', error)
   }

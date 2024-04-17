@@ -43,6 +43,7 @@ async function creerUser(){
     user.value.rue = ''
     user.value.email = ''
     user.value.telephone = ''
+    user.value.administrateur = false
   }
   catch (error){
     // si jamais j'ai des erreur
