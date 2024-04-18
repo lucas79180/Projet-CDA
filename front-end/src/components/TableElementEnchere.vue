@@ -17,6 +17,9 @@
         <template v-else-if="field === 'dateEnchere'">
           {{ formatDate(element.dateEnchere) }}
         </template>
+        <template v-else-if="field === 'montantEnchere'">
+          {{ element.montantEnchere }} pts
+        </template>
         <template v-else>
           {{ element[field] }}
         </template>
@@ -26,7 +29,7 @@
 </template>
 
 <script setup>
-import {defineProps, defineEmits, ref} from 'vue';
+import {defineProps} from 'vue';
 
 const props = defineProps(['listeEnchere', 'labels', 'fields']);
 
@@ -40,7 +43,7 @@ const formatDate = (dateString) => {
   const year = date.getFullYear();
   const hours = date.getHours().toString().padStart(2, '0');
   const minutes = date.getMinutes().toString().padStart(2, '0');
-  const formattedDate = `${day}-${month}-${year} ${hours}:${minutes}`;
+  const formattedDate = `${day}/${month}/${year} ${hours}h${minutes}`;
   return formattedDate;
 };
 
@@ -134,7 +137,7 @@ form label {
 form input[type="text"],
 form input[type="email"],
 form input[type="tel"],
-form input[type="checkbox"]{
+form input[type="checkbox"] {
   width: calc(50% - 12px); /* Raccourcir les champs de saisie */
   padding: 8px;
   border: 1px solid #cccccc;
