@@ -32,8 +32,7 @@ public class ArticleVendu {
     private Integer miseAPrix;
     @Column(name = "prix_vente")
     private Integer prixVente;
-    // etatVente t'est présente que dans l'objet et pas dans la bdd
-    //private boolean etatVente;
+    
     @ManyToOne
     @JoinColumn(name = "no_categorie")
     private Categorie categorie;

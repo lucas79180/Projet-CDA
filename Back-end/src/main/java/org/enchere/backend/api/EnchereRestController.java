@@ -53,7 +53,7 @@ public class EnchereRestController {
             UtilisateurSpringSecurity user = (UtilisateurSpringSecurity) userService.loadUserByUsername(username);
             User utilisateur = user.getUser();
 
-            ArticleVendu article = articleVenduService.getArticleById(idArticle);
+            ArticleVendu article = articleVenduService.getArticleById(idArticle).getArticle();
             if (article == null) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Article not found");
             }

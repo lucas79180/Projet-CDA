@@ -82,23 +82,23 @@ public class ArticleVenduRestController {
             System.out.println("ID de l'article: " + idArticle);
             System.out.println("Prix de l'enchère proposé: " + bidPrice);
 
-            ArticleVendu article = articleVenduService.getArticleById(idArticle);
+            ArticleRetrait article = articleVenduService.getArticleById(idArticle);
             if (article == null) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Article not found");
             }
             System.out.println("Article trouvé: " + article);
 
             // Vérifier si le prix de l'enchère est valide
-            if (bidPrice <= article.getPrixVente()) {
+            if (bidPrice <= article.getArticle().getPrixVente()) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Le prix de l'enchère doit être supérieur au prix de vente actuel");
             }
 
             // Mettre à jour le prix de vente de l'article avec le nouveau prix de l'enchère
-            article.setPrixVente(bidPrice);
+            article.getArticle().setPrixVente(bidPrice);
 
             // Enregistrer l'article mis à jour dans la base de données
-            articleVenduService.modifierArticle(article);
-            System.out.println("Prix de vente mis à jour: " + article.getPrixVente());
+            articleVenduService.modifierArticle(article.getArticle());
+            System.out.println("Prix de vente mis à jour: " + article.getArticle().getPrixVente());
         } catch (Exception e) {
             System.err.println("Erreur lors du traitement de l'enchère: " + e.getMessage());
             throw e;

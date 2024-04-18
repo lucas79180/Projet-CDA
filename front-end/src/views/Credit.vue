@@ -31,7 +31,7 @@
       </div>
       <!-- Ajoutez d'autres champs ici selon les informations que vous avez -->
 
-      <button type="submit" class="submit-btn">Enregistrer</button>
+      <button type="submit" class="submit-btn">Payer</button>
     </form>
   </div>
 </template>
@@ -69,7 +69,7 @@ const modifierProfil = async () => {
     userInfo.value.credit = nouveauCredit.toString(); // Mettre à jour la valeur du crédit dans userInfo
 
     await axios.put(`/utilisateurs/${userInfo.value.id}`, userInfo.value);
-    await router.push('/ajout-credit'); // Rediriger vers la page de profil après l'ajout de crédit
+    await router.push('/mon-profil'); // Rediriger vers la page de profil après l'ajout de crédit
   } catch (error) {
     console.error('Erreur lors de l\'ajout de crédit:', error);
   }
