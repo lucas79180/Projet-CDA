@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -25,9 +26,9 @@ public class ArticleVendu {
     private String nomArticle;
     private String description;
     @Column(name = "date_debut_encheres")
-    private LocalDateTime dateDebutEncheres;
+    private LocalDate dateDebutEncheres;
     @Column(name = "date_fin_encheres")
-    private LocalDateTime dateFinEncheres;
+    private LocalDate dateFinEncheres;
     @Column(name = "prix_initial")
     private Integer miseAPrix;
     @Column(name = "prix_vente")
@@ -48,7 +49,7 @@ public class ArticleVendu {
     public ArticleVendu() {
     }
 
-    public ArticleVendu(Integer noArticle, String nomArticle, String description, LocalDateTime dateDebutEncheres, LocalDateTime dateFinEncheres, Integer miseAPrix, Integer prixVente, boolean etatVente, Categorie categorie, Retrait retrait, List<Enchere> encheres, User vendeur) {
+    public ArticleVendu(Integer noArticle, String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres, Integer miseAPrix, Integer prixVente, boolean etatVente, Categorie categorie, Retrait retrait, List<Enchere> encheres, User vendeur) {
         this.noArticle = noArticle;
         this.nomArticle = nomArticle;
         this.description = description;
