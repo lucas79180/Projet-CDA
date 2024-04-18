@@ -69,7 +69,7 @@ onMounted(() => {
 async function recupererenchere() {
   const reponseHTTP = await axios.get(`/encheres/${route.params.id}`);
   // Inverser l'ordre de la liste des enchères
-  listeEncheres.value = reponseHTTP.data.reverse();
+  listeEncheres.value = reponseHTTP.data;
   console.log("--LOG--", listeEncheres.value);
 }
 
