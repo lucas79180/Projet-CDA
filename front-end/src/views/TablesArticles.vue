@@ -69,18 +69,17 @@ const articlesFiltres = computed(() => {
 </script>
 
 <style scoped>
-/* Styles spécifiques aux cartes d'articles */
 .article-cards {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center; /* Centrer horizontalement les éléments */
   gap: 20px; /* Espace entre les cartes */
 }
-.search-container {
-  width: 500px; /* Choisissez une largeur fixe appropriée */
+
+/* Ajoutez ces styles pour centrer verticalement la liste si nécessaire */
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centrer verticalement */
 }
-.select-container {
-  width: 400px; /* Choisissez une largeur fixe appropriée */
-}
-/* Styles génériques pour les composants */
-/* Vous pouvez ajouter des styles supplémentaires selon vos besoins */
 </style>
