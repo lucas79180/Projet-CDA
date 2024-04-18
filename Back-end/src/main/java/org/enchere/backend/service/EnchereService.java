@@ -6,7 +6,8 @@ import java.util.List;
 
 // EnchereService.java
 public interface EnchereService {
-    List<Enchere> getAllEncheres();
 
+    List<Enchere> getAllEncheres();
     Enchere saveEnchere(Enchere enchere);
+    List<Enchere> getEncheresByArticleID(Integer articleID);
 }
