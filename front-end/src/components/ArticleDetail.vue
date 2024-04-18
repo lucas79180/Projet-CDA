@@ -7,7 +7,8 @@
     <p>Mise à prix : {{article.article.miseAPrix}} point(s)</p>
     <p>Date de fin des enchères : {{ formatDate(article.article.dateFinEncheres) }}</p>
     <p>Retrait : {{article.retrait.rue}}, {{article.retrait.code_postal}}, {{article.retrait.ville}}</p>
-    <p>Prix de vente : {{ article.article.prixVente }} pt par {{ listeEncheres.length > 0 ? listeEncheres[listeEncheres.length - 1].utilisateur.pseudo : 'Aucun utilisateur' }}</p>
+    <p>Prix de vente : {{ article.article.prixVente }} pt par {{ listeEncheres.length > 0 ? listeEncheres[0].utilisateur.pseudo : 'Aucun utilisateur' }}</p>
+
 
     <p>Vendeur : {{ article.article.vendeur.pseudo }}</p>
     <p>Proposition :
@@ -66,7 +67,7 @@ onMounted(() => {
 });
 
 async function recupererenchere() {
-  const reponseHTTP = await axios.get('/encheres');
+  const reponseHTTP = await axios.get(`/encheres/${route.params.id}`);
   // Inverser l'ordre de la liste des enchères
   listeEncheres.value = reponseHTTP.data.reverse();
   console.log("--LOG--", listeEncheres.value);
