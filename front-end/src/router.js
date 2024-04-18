@@ -94,7 +94,8 @@ const routes = [
         path: '/article/:id',
         name: 'articleDetail',
         component: ArticleDetail,
-        props: true
+        props: true,
+        meta: { requiresAuth: true, requiresActif: true }
     },
     {
         path: '/',
