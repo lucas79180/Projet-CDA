@@ -1,5 +1,5 @@
 // src/router.js
-import { createRouter, createWebHistory } from 'vue-router';
+import {createRouter, createWebHistory} from 'vue-router';
 import NouveauArticle from './views/NouveauArticle.vue';
 import UpdateUser from "@/views/UpdateUser.vue";
 import InfoUser from "@/views/infoUser.vue";
@@ -8,9 +8,6 @@ import Login from "./views/Login.vue";
 import TableUser from "@/views/TableUser.vue";
 import Confirmation from "@/views/Confirmation.vue";
 import ForgotPassword from "@/views/ForgotPassword.vue";
-import Navbar from "@/views/Navbar.vue";
-import axios from "@/axios/instance.js";
-import {onMounted, ref} from "vue";
 import Credit from "@/views/Credit.vue";
 import Error404 from "@/views/Error404.vue";
 import ErrorLayout from "@/views/ErrorLayout.vue";

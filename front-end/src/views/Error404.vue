@@ -1,6 +1,6 @@
 <template>
   <div class="error-404">
-    <h1>Erreur 404</h1>
+    <h2>Erreur 404</h2>
     <p>Désolé, la page que vous recherchez est introuvable.</p>
     <router-link to="/">Retour à la page d'accueil</router-link>
   </div>
