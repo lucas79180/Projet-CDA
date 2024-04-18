@@ -33,7 +33,7 @@ const modifierProfil = () => {
 
   <main>
     <div class="container">
-      <h1 class="title">Mon Profil</h1>
+      <h2 class="title">Mon Profil</h2>
 
       <div class="profile-box">
         <div class="user-info">

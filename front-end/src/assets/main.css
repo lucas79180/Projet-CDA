@@ -67,15 +67,18 @@ nav a:hover,
 }
 
 input[type="text"],
+input[type="file"],
 input[type="number"],
 input[type="email"],
 input[type="date"],
 input[type="password"],
+textarea,
+select,
 input[type="tel"] {
   width: calc(100% - 24px); /* Ajustement pour le padding */
-  padding: 8px;
+  padding: 10px;
   border: 1px solid #cccccc;
-  border-radius: 6px;
+  border-radius: 5px;
   font-size: 14px;
   margin-bottom: 15px; /* Augmentation de l'espace entre l'étiquette et le champ de saisie */
 }
@@ -98,6 +101,10 @@ select {
   background-color: transparent;
   appearance: none; /* Supprimer les styles par défaut du navigateur */
   color: #5a5a5a; /* Gris foncé */
+}
+
+h2, h3 {
+  color: #003A5D; /* Bleu foncé */
 }
 
 .logo {

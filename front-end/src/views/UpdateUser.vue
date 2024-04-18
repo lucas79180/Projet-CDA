@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1 class="title">Modifier Mon Profil</h1>
+    <h2 class="title">Modifier Mon Profil</h2>
     <!-- Formulaire de modification -->
     <form class="profile-form" @submit.prevent="modifierProfil(userInfo.value)">
       <div class="form-group">

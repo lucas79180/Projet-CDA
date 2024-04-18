@@ -61,7 +61,7 @@ async function creerUser(){
     <!--on affiche erreurs éventuelles (ne s'affiche que si la liste d'erreur n'est pas vide) -->
     <ErrorsDisplay :errors="listeErreurs"/>
 
-    <h1>Inscription</h1>
+    <h2>Inscription</h2>
 
     <!--
         Je vais créer une balise form juste pour des raisons sémantiques (accessibilité, référencement par les moteurs de recherche)

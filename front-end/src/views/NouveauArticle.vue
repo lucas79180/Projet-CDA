@@ -1,10 +1,9 @@
 <template>
   <div class="nouveau-article">
+    <h2 ref="formTitle" class="form-title">Article</h2>
     <div class="form-container">
-      <h2 ref="formTitle" class="form-title">article</h2>
       <form class="form" @submit.prevent="submitForm">
         <div class="form-group">
-          <h3>Article</h3>
           <FormTextElement label="Nom de l'article" type="text" :object="articleRetrait.article" field="nomArticle"/>
 
           <label for="description">Description :</label>
@@ -257,18 +256,12 @@ label {
   margin-bottom: 5px;
 }
 
-input[type="text"],
-input[type="number"],
-textarea,
+
 select {
   width: 100%;
   padding: 10px;
   border-radius: 5px;
   border: 1px solid #ccc;
-}
-
-input[type="file"] {
-  /* Stylez selon vos préférences */
 }
 
 .form-actions {
