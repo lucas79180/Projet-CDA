@@ -72,7 +72,7 @@ const modifierProfil = () => {
             <p><strong>Credit:</strong></p>
             <p>{{ userInfo.credit }}</p>
             <nav >
-            <router-link to="/ajout-credit">Ajout de crédit</router-link>
+            <router-link to="/ajout-credit">Acheter des crédits supplémentaires</router-link>
             </nav>
           </div>
           <!-- Ajouter d'autres champs ici selon les informations disponibles -->
