@@ -207,8 +207,10 @@ export default {
           }
         });
         // Récupération de l'URL de l'image depuis la réponse du serveur
-        articleRetrait.value.article.imageUrl = responseImg.data.imageUrl;
-
+        console.log("--LOG-- responseImg : ", responseImg);
+        articleRetrait.value.article.imageUrl = responseImg.data;
+        console.log("--LOG-- :responseImg.data ", responseImg.data.imageUrl);
+        console.log("--LOG -- articleRetrait.value.article.imageUrl : " + articleRetrait.value.article.imageUrl);
 
         // Envoi dans le back des datas via axios
         articleRetrait.value.article.vendeur = userInfo.value;
@@ -235,7 +237,7 @@ export default {
     }
 
     // Fonction pour gérer le téléchargement de l'image
-    async function handleImageUpload(event) {
+    function handleImageUpload(event) {
       console.log("--LOG-- exec handleImageUpload")
       const file = event.target.files[0];
       // Assignez le fichier à votre articleRetrait
@@ -254,6 +256,7 @@ export default {
       listeErreurs,
       submitForm,
       cancel,
+      handleImageUpload,
       formTitle,
       imageFile
     };
