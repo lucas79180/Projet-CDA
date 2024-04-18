@@ -1,16 +1,10 @@
 package org.enchere.backend.api;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.enchere.backend.model.ArticleRetrait;
 import org.enchere.backend.model.ArticleVendu;
-import org.enchere.backend.model.Enchere;
-import org.enchere.backend.model.User;
-import org.enchere.backend.security.JwtUtils;
-import org.enchere.backend.security.UtilisateurSpringSecurity;
 import org.enchere.backend.service.ArticleVenduService;
 import org.enchere.backend.service.EnchereService;
-import org.enchere.backend.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 

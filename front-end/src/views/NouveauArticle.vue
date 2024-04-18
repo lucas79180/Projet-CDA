@@ -4,6 +4,7 @@
     <div class="form-container">
       <form class="form" @submit.prevent="submitForm">
         <div class="form-group">
+          <h3>Article</h3>
           <FormTextElement label="Nom de l'article" type="text" :object="articleRetrait.article" field="nomArticle"/>
 
           <label for="description">Description :</label>
@@ -21,7 +22,8 @@
           </select>
           <span v-else>Loading categories...</span>
 
-          <FormTextElement label="Mise à prix (en points)" type="number" :object="articleRetrait.article" field="miseAPrix"
+          <FormTextElement label="Mise à prix (en points)" type="number" :object="articleRetrait.article"
+                           field="miseAPrix"
                            required/>
 
           <FormTextElement label="Début de l'enchère" type="date" :object="articleRetrait.article"
@@ -29,7 +31,11 @@
 
           <FormTextElement label="Fin de l'enchère" type="date" :object="articleRetrait.article"
                            field="dateFinEncheres" required/>
+
+          <label for="image">Image:</label>
+          <input type="file" id="image" @change="handleImageUpload" accept="image/*">
         </div>
+
         <div class="form-group">
           <h3>Retrait</h3>
           <FormTextElement label="Rue" type="text" :object="articleRetrait.retrait" field="rue" required/>
@@ -82,6 +88,7 @@ export default {
     const userInfo = ref([]);
     const refArticle = useRoute().params.id; // On récupéré l'id de l'article passé en paramètre
     const formTitle = ref(null); // Contiendra le libellé de H2
+    const imageFile = ref(null)
     const articleRetrait = ref({
       article: {
         noArticle: null,
@@ -91,13 +98,15 @@ export default {
         miseAPrix: 0,
         prixVente: 0,
         dateDebutEncheres: '',
-        dateFinEncheres: ''
+        dateFinEncheres: '',
+        imageUrl: ''
       },
       retrait: {
         rue: '',
         code_postal: '',
         ville: ''
-      }
+      },
+      imageFile: null
     });
 
     // Permet de charger la page en fonction de ce qui est passé en param
@@ -141,12 +150,12 @@ export default {
     }
 
     // Définir la date du jour
-    articleRetrait.value.article.dateDebutEncheres = new Date().toISOString().slice(0, 16);
+    articleRetrait.value.article.dateDebutEncheres = new Date().toISOString().slice(0, 10);
 
     // Définir la date dans 30 jours
     const thirtyDaysLater = new Date();
     thirtyDaysLater.setDate(thirtyDaysLater.getDate() + 30);
-    articleRetrait.value.article.dateFinEncheres = thirtyDaysLater.toISOString().slice(0, 16);
+    articleRetrait.value.article.dateFinEncheres = thirtyDaysLater.toISOString().slice(0, 10);
 
 
     async function recupererCategories() {
@@ -187,11 +196,23 @@ export default {
     async function submitForm() {
       console.log("--LOG-- exec submitForm")
       try {
+        // Envoi de l'image
+        console.log("--LOG-- articleRetrait.value.imageFile : ", articleRetrait.value.imageFile)
+        const formData = new FormData();
+        formData.append('image', articleRetrait.value.imageFile); // Ajoutez l'image à FormData
+        // Envoi de l'image au serveur
+        const responseImg = await axios.post('/upload-image', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+        // Récupération de l'URL de l'image depuis la réponse du serveur
+        articleRetrait.value.article.imageUrl = responseImg.data.imageUrl;
+
+
         // Envoi dans le back des datas via axios
         articleRetrait.value.article.vendeur = userInfo.value;
         articleRetrait.value.article.prixVente = articleRetrait.value.article.miseAPrix;
-        console.log("--LOG-- userInfo.value :");
-        console.log(userInfo.value);
         console.log("--LOG-- articleRetrait.value.article.vendeur :");
         console.log(articleRetrait.value.article.vendeur);
         articleRetrait.value.article = await axios.post(`article`, articleRetrait.value)
@@ -205,17 +226,26 @@ export default {
         console.log("--LOG-- articleRetrait.value.article.noArticle :", articleRetrait.value.article.data.article.noArticle)
         await router.push('/article/' + articleRetrait.value.article.data.article.noArticle);
 
-
-
       } catch (erreur) {
         console.log("--LOG-- >catch");
         console.error("Erreur lors de l'envoi du formulaire:", erreur);
         listeErreurs.value.push("Erreur lors de l'envoi du formulaire.");
       }
+
+    }
+
+    // Fonction pour gérer le téléchargement de l'image
+    async function handleImageUpload(event) {
+      console.log("--LOG-- exec handleImageUpload")
+      const file = event.target.files[0];
+      // Assignez le fichier à votre articleRetrait
+      articleRetrait.value.imageFile = file;
+      console.log("--LOG-- articleRetrait.value.imageFile : ", articleRetrait.value.imageFile)
+      console.log("--LOG-- file = ", file)
     }
 
     function cancel() {
-      // Logique d'annulation du formulaire
+      window.history.back()
     }
 
     return {
@@ -224,7 +254,8 @@ export default {
       listeErreurs,
       submitForm,
       cancel,
-      formTitle
+      formTitle,
+      imageFile
     };
   }
 };
@@ -278,6 +309,7 @@ button {
 }
 
 button:hover {
-  background-color: #D0121B; /* Rouge */
+  background-color: #0056b3;
 }
+
 </style>

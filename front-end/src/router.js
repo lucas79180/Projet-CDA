@@ -15,6 +15,7 @@ import Credit from "@/views/Credit.vue";
 import Error404 from "@/views/Error404.vue";
 import ErrorLayout from "@/views/ErrorLayout.vue";
 import ArticleDetail from "@/components/ArticleDetail.vue";
+import Authentification from "@/views/Authentification.vue";
 
 
 function isAuthenticated() {

@@ -60,7 +60,7 @@ window.addEventListener('beforeunload', () => {
 
 <template>
   <main>
-    <h1>Login</h1>
+    <h2>Login</h2>
     <ul class="error" v-if="errors">
       <li class="error">{{errors}}</li>
     </ul>

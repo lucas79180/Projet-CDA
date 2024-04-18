@@ -1,7 +1,7 @@
 <template>
   <div class="article-detail" v-if="article">
-    <h1> Détail Vente</h1>
-    <h2>{{ article.article.nomArticle }}</h2>
+    <h2> Détail Vente</h2>
+    <h3>{{ article.article.nomArticle }}</h3>
     <p>Description : {{article.article.description}}</p>
     <p>Catégorie : {{article.article.categorie.libelle}}</p>
     <p>Mise à prix : {{article.article.miseAPrix}} point(s)</p>

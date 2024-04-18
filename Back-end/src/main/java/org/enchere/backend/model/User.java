@@ -69,23 +69,5 @@ public class User {
         this.articlesVendu = articlesVendu;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", pseudo='" + pseudo + '\'' +
-                ", nom='" + nom + '\'' +
-                ", prenom='" + prenom + '\'' +
-                ", telephone='" + telephone + '\'' +
-                ", code_postal='" + code_postal + '\'' +
-                ", email='" + email + '\'' +
-                ", rue='" + rue + '\'' +
-                ", ville='" + ville + '\'' +
-                ", mot_de_passe='" + mot_de_passe + '\'' +
-                ", credit=" + credit +
-                ", administrateur=" + administrateur +
-                ", encheres=" + encheres +
 
-                '}';
-    }
 }
