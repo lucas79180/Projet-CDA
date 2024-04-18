@@ -3,6 +3,7 @@ package org.enchere.backend.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
 @Entity
 @Table(name = "ENCHERES")
 public class Enchere {
@@ -34,4 +36,10 @@ public class Enchere {
     @JoinColumn(name = "no_article")
     private ArticleVendu articleVendu;
 
+    public Enchere(LocalDateTime dateEnchere, Integer montantEnchere, User utilisateur, ArticleVendu articleVendu) {
+        this.dateEnchere = dateEnchere;
+        this.montantEnchere = montantEnchere;
+        this.utilisateur = utilisateur;
+        this.articleVendu = articleVendu;
+    }
 }
