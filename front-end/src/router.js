@@ -77,7 +77,7 @@ const routes = [
         path: '/forgot-password',
         name: 'ForgotPassword',
         component: ForgotPassword,
-        meta: { requiresAuth: true, requiresActif: true }
+        meta: { requiresActif: true }
     },
     {
         path: '/ajout-credit',
