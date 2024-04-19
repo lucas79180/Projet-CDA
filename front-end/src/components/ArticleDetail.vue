@@ -32,12 +32,26 @@
         </tr>
 
         <br>
-        <p>Fin de des enchères dans {{ joursRestant(article.article.dateFinEncheres) }} jours
+        <p>Fin des enchères dans {{ joursRestant(article.article.dateFinEncheres) }} jours
           <br>(le {{ formatDate(article.article.dateFinEncheres) }})</p>
       </div>
 
-      <div class="article-detail-enchere">
-        <div class="acheteur">
+      <div class="article-detail-enchere" >
+
+        <div class="acheteur-avant-debut" v-if="etat === 'acheteur-avant-debut'">
+          <h3>Meilleur offre : {{ article.article.prixVente }} points</h3>
+          <p>Par {{ listeEncheres.length > 0 ? listeEncheres[0].utilisateur.pseudo : 'Aucun utilisateur' }}
+            <br> Mise à prix : {{ article.article.miseAPrix }} points
+          </p>
+          <br>
+          <p>Vente non commencée, veuillez patientez.</p>
+          <p>Début de la vente le {{ formatDate(article.article.dateDebutEncheres) }}</p>
+          <br>
+          <br><br>
+        </div>
+
+
+        <div class="acheteur-en-cours" v-if="etat === 'acheteur-en-cours'">
           <h3>Meilleur offre : {{ article.article.prixVente }} points</h3>
           <p>Par {{ listeEncheres.length > 0 ? listeEncheres[0].utilisateur.pseudo : 'Aucun utilisateur' }}
             <br> Mise à prix : {{ article.article.miseAPrix }} points
@@ -52,14 +66,87 @@
             </td>
             <td>
               <button class="button" @click="toggleListEncheres">
-                {{ showListEncheres ? 'Masquer la liste des offres' : 'Afficher la liste des offres' }} les enchères
+                {{ showListEncheres ? 'Masquer la liste des offres' : 'Afficher la liste des offres' }}
               </button>
             </td>
           </tr>
         </div>
+
+        <div class="acheteur-fin" v-if="etat === 'acheteur-fin'">
+          <h3>Meilleur offre : {{ article.article.prixVente }} points</h3>
+          <h3>Le gagant est {{ listeEncheres.length > 0 ? listeEncheres[0].utilisateur.pseudo : 'Aucun utilisateur' }}</h3>
+          <p>
+            <br> Mise à prix : {{ article.article.miseAPrix }}
+            <br> Nombre d'enchéreurs : {{ listeEncheres.length}} personnes
+            <br><br>
+            <button class="button" @click="toggleListEncheres">
+              {{ showListEncheres ? 'Masquer la liste des offres' : 'Afficher la liste des offres' }}
+            </button>
+          </p>
+          <br>
+          <br>
+        </div>
+
+        <div class="acheteur-fin-gagant" v-if="etat === 'acheteur-fin-gagant'">
+          <h3>Meilleur offre : {{ article.article.prixVente }} points</h3>
+          <h3>Félicitations, vous avez remporté l'enchère.</h3>
+          <p>
+            <br> Mise à prix : {{ article.article.miseAPrix }}
+            <br> Nombre d'enchéreurs : {{ listeEncheres.length}} personnes
+            <br><br>
+            <button class="button" @click="toggleListEncheres">
+              {{ showListEncheres ? 'Masquer la liste des offres' : 'Afficher la liste des offres' }}
+            </button>
+          </p>
+          <br>
+          <br>
+        </div>
+
+        <div class="vendeur-avant-debut" v-if="etat === 'vendeur-avant-debut'">
+          <h3>Meilleur offre : {{ article.article.prixVente }} points</h3>
+          <p>Par {{ listeEncheres.length > 0 ? listeEncheres[0].utilisateur.pseudo : 'Aucun utilisateur' }}
+            <br> Mise à prix : {{ article.article.miseAPrix }} points
+          </p>
+          <br>
+          <p>Vente non commencée, modification possible.</p>
+          <br>
+          <router-link :to="'/article/modification/' + article.article.noArticle">
+            <button class="button">Modifier le produit</button>
+          </router-link>
+          <br><br>
+        </div>
+
+        <div class="vendeur-en-cours" v-if="etat === 'vendeur-en-cours'">
+          <h3>Meilleur offre : {{ article.article.prixVente }} points</h3>
+          <p>Par {{ listeEncheres.length > 0 ? listeEncheres[0].utilisateur.pseudo : 'Aucun utilisateur' }}
+            <br> Mise à prix : {{ article.article.miseAPrix }} points
+          </p>
+          <br>
+          <p>Vente commencée, modification impossible.</p>
+          <br>
+          <button class="button" @click="toggleListEncheres">
+            {{ showListEncheres ? 'Masquer la liste des offres' : 'Afficher la liste des offres' }}
+          </button>
+          <br><br>
+        </div>
+
+        <div class="vendeur-fin" v-if="etat === 'vendeur-fin'">
+          <h3>Meilleur offre : {{ article.article.prixVente }} points</h3>
+          <p>Par {{ listeEncheres.length > 0 ? listeEncheres[0].utilisateur.pseudo : 'Aucun utilisateur' }}
+            <br> Mise à prix : {{ article.article.miseAPrix }} points
+          </p>
+          <br>
+          <p>Vente terminée, vous avez été crédité.</p>
+          <br>
+          <button class="button" @click="toggleListEncheres">
+            {{ showListEncheres ? 'Masquer la liste des offres' : 'Afficher la liste des offres' }}
+          </button>
+          <br><br>
+        </div>
+
+
       </div>
     </div>
-
     <div class="article-detail-listeencheres" v-show="showListEncheres">
       <TableElementEnchere
           :labels="['Date de l\'enchere', 'Montant de l\'enchere', 'Utilisateur' ]"
@@ -81,6 +168,7 @@ const route = useRoute();
 const router = useRouter();
 const bidPrice = ref(0);
 const showListEncheres = ref(false);
+const etat = ref("null");
 
 const toggleListEncheres = () => {
   showListEncheres.value = !showListEncheres.value;
@@ -102,7 +190,64 @@ onMounted(() => {
   console.log("--LOG-- *** ArticleDetail.vue *** :");
   fetchArticle();
   recupererenchere();
+  affichageEtat();
 });
+
+async function affichageEtat() {
+  const result = await axios.get('/login');
+  console.log("result login ", result);
+  console.log(article);
+  console.log("article.value.article.vendeur.id = ", article.value.article.vendeur.id);
+  console.log("result.data.id" , result.data.id)
+
+
+  const dateDebut = new Date(article.value.article.dateDebutEncheres);
+  const dateFin = new Date(article.value.article.dateFinEncheres);
+  const now = new Date();
+
+
+
+
+  if(article.value.article.vendeur.id === result.data.id){
+    console.log("Mode vendeur")
+
+    console.log(article.value.article.dateDebutEncheres);
+
+    if(article.value.article.vendeur.id === result.data.id){
+      console.log("Mode vendeur");
+      console.log("Date de début de l'enchère :", dateDebut);
+      console.log("Date de fin de l'enchère :", dateFin);
+
+      if(now < dateDebut) {
+        console.log("Cas 1 : On est avant le début de l'enchère");
+        etat.value = "vendeur-avant-debut";
+      } else if (now >= dateDebut && now <= dateFin) {
+        console.log("Cas 2 : On est pendant l'enchère");
+        etat.value = "vendeur-en-cours";
+      } else {
+        console.log("Cas 3 : On est après la fin de l'enchère");
+        etat.value = "vendeur-fin";
+      }
+    }
+  } else {
+    console.log("Mode acheteur")
+    if(now < dateDebut) {
+      console.log("Cas 1 : On est avant le début de l'enchère");
+      etat.value = "acheteur-avant-debut";
+    } else if (now >= dateDebut && now <= dateFin) {
+      console.log("Cas 2 : On est pendant l'enchère");
+      etat.value = "acheteur-en-cours";
+    } else {
+      console.log("Cas 3 : On est après la fin de l'enchère");
+      console.log("listeEncheres : ", listeEncheres.value[0].utilisateur.id )
+      if(listeEncheres.value[0].utilisateur.id === result.data.id){
+        etat.value = "acheteur-fin-gagant";
+      } else {
+        etat.value = "acheteur-fin";
+      }
+    }
+  }
+}
 
 async function recupererenchere() {
   const reponseHTTP = await axios.get(`/encheres/${route.params.id}`);

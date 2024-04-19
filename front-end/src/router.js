@@ -30,7 +30,7 @@ console.log(userActif)
 }
 const routes = [
     {
-        path: '/nouveau-article/:id',
+        path: '/article/modification/:id',
         name: 'NouveauArticle',
         component: NouveauArticle,
         meta: { requiresActif: true ,requiresAuth: true  }

@@ -9,7 +9,7 @@
     </nav>
     <section v-if="user.id">
       <nav>
-        <router-link to="/nouveau-article/add">Vendre un article</router-link>
+        <router-link to="/article/modification/add">Vendre un article</router-link>
         <router-link to="/mon-profil"> Mon profil</router-link>
 
         <router-link  v-if="user.administrateur" to="/utilisateurs"> Utilisateurs </router-link>
