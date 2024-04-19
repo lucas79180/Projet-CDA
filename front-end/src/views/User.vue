@@ -1,59 +1,48 @@
 <script setup>
-
-import {ref} from "vue";
+import { ref } from "vue";
 import FormTextElement from "@/components/FormTextElement.vue";
 import axios from "../axios/instance";
-
+import { useRouter } from "vue-router"; // Importez le routeur
 
 const user = ref({
-  pseudo : '',
-  nom : '',
-  prenom : '',
-  email : '',
-  telephone : '',
-  rue : '',
-  code_postal : '',
-  ville: '',
-  mot_de_passe: '',
-})
+  pseudo: "",
+  nom: "",
+  prenom: "",
+  email: "",
+  telephone: "",
+  rue: "",
+  code_postal: "",
+  ville: "",
+  mot_de_passe: "",
+});
 
+const listeErreurs = ref([]);
+const router = useRouter(); // Initialisez le routeur
 
-
-const listeErreurs = ref([])
-
-
-async function creerUser(){
+async function creerUser() {
   try {
-    // on veut passer dans le corps de la requête HTTP le JSON correspondant à la valeur de notre modèle : membre
-    await axios.post('/utilisateurs', user.value)
+    await axios.post("/utilisateurs", user.value);
+    listeErreurs.value = [];
+    user.value = {
+      pseudo: "",
+      nom: "",
+      prenom: "",
+      email: "",
+      telephone: "",
+      rue: "",
+      code_postal: "",
+      ville: "",
+      mot_de_passe: "",
+    };
+    // Redirigez l'utilisateur vers la page de connexion
+     router.push('/connexion')
+    // Affichez un message de confirmation
 
-    // si jamais on n'a pas d'erreur
-    // on vide la variable listeErreurs
-    listeErreurs.value = []
-
-    // une fois qu'on a ajouté la membre, on recharge la liste des membres
-
-    // on reinitialise le formulaire
-    user.value.pseudo = ''
-    user.value.prenom = ''
-    user.value.nom = ''
-    user.value.code_postal = ''
-    user.value.ville = ''
-    user.value.mot_de_passe = ''
-    user.value.rue = ''
-    user.value.email = ''
-    user.value.telephone = ''
-    user.value.administrateur = false
-  }
-  catch (error){
-    // si jamais j'ai des erreur
-
-    // je mets à jour la variable listeErreurs de notre modèle afin que le template les affiche (si jamais il y en a)
+  } catch (error) {
     if (error.response.data.errors)
-      listeErreurs.value = error.response.data.errors
+      listeErreurs.value = error.response.data.errors;
   }
 }
-
 </script>
 <template>
   <main>

@@ -29,7 +29,7 @@ public class User {
     private String mot_de_passe;
     private int credit = 0;
     private boolean administrateur = false;
-    private boolean actif = false;
+    private boolean actif = true;
 
     @JsonIgnore
     @OneToMany(mappedBy = "utilisateur")
