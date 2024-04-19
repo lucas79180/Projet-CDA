@@ -85,8 +85,20 @@ const articlesFiltres = computed(() => {
 
 .search-container{
   width: 500px;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 10px; /* Augmenter le rayon des coins */
+
 }
 .select-container{
   width: 400px;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border-radius: 10px; /* Augmenter le rayon des coins */
+
 }
 </style>
