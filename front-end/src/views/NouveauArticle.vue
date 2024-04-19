@@ -198,19 +198,21 @@ export default {
       try {
         // Envoi de l'image
         console.log("--LOG-- articleRetrait.value.imageFile : ", articleRetrait.value.imageFile)
-        const formData = new FormData();
-        formData.append('image', articleRetrait.value.imageFile); // Ajoutez l'image à FormData
-        // Envoi de l'image au serveur
-        const responseImg = await axios.post('/upload-image', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        });
-        // Récupération de l'URL de l'image depuis la réponse du serveur
-        console.log("--LOG-- responseImg : ", responseImg);
-        articleRetrait.value.article.imageUrl = responseImg.data;
-        console.log("--LOG-- :responseImg.data ", responseImg.data.imageUrl);
-        console.log("--LOG -- articleRetrait.value.article.imageUrl : " + articleRetrait.value.article.imageUrl);
+        if (!articleRetrait.value.imageFile == null) {
+          const formData = new FormData();
+          formData.append('image', articleRetrait.value.imageFile); // Ajoutez l'image à FormData
+          // Envoi de l'image au serveur
+          const responseImg = await axios.post('/upload-image', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          });
+          // Récupération de l'URL de l'image depuis la réponse du serveur
+          console.log("--LOG-- responseImg : ", responseImg);
+          articleRetrait.value.article.imageUrl = responseImg.data;
+          console.log("--LOG-- :responseImg.data ", responseImg.data.imageUrl);
+          console.log("--LOG -- articleRetrait.value.article.imageUrl : " + articleRetrait.value.article.imageUrl);
+        }
 
         // Envoi dans le back des datas via axios
         articleRetrait.value.article.vendeur = userInfo.value;
