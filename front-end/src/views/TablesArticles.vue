@@ -82,4 +82,11 @@ const articlesFiltres = computed(() => {
   flex-direction: column;
   align-items: center; /* Centrer verticalement */
 }
+
+.search-container{
+  width: 500px;
+}
+.select-container{
+  width: 400px;
+}
 </style>
